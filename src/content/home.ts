@@ -3,6 +3,7 @@
  *  sigles traduits à leur première apparition, convertisseur once/tola retiré de l'accueil (il a ses pages). */
 import type { FAQ, Helpers } from '../lib/page-types';
 import { SNAPSHOT } from '../lib/engine/params';
+import { exampleOffer } from '../lib/exemple';
 
 interface HomeText { title: string; description: string; h1: string; lead: string; resume: string; faqs: FAQ[]; body: (h: Helpers) => string }
 
@@ -10,7 +11,7 @@ export const HOME: HomeText = {
   title: 'Gold Price per Gram UK by Carat: 9ct, 18ct, 22ct, 24ct',
   description: 'Gold price per gram in pounds for 9ct, 14ct, 18ct, 22ct and 24ct at the live spot price, timed, with the legal UK fineness and the share of metal an offer pays.',
   h1: 'Gold price per gram in the UK, by carat',
-  lead: 'Choose the carat stamped on your gold and type its weight: you see what the gold inside is worth today, before a buyer takes its cut.',
+  lead: 'Choose the carat stamped on your gold and type its weight: you see what the gold inside is worth today, before a buyer takes its cut. We do not buy or sell gold.',
   resume: 'A gram of 9ct gold is just over a third pure gold, a gram of 18ct is three quarters and a gram of 22ct is almost all gold, and this page turns that share into pounds at today’s gold price. The number stamped on the piece says it exactly, in parts per 1,000: {f.9} for 9ct, {f.18} for 18ct and 916 for 22ct, the numbers UK hallmarking law sets. The price comes from gold-api.com: it is the price of one ounce of pure gold, which weighs {oz2} grams, and the time of that price is shown under the fields. If the live price cannot be read, the page uses the price recorded when it was built and says so. What you see is the value of the gold itself. No buyer pays all of it, because a buyer has to melt and refine the gold and pay its own costs, which is why the offer checker turns any quote into a share of that value. Gold by Carat is an independent site, not a gold buyer or a dealer, and it shows no buyer’s prices.',
   faqs: [
     { q: 'Why is the gold price per gram on this site higher than what shops pay?', a: 'The figure here is the value of the gold itself: the weight of pure gold in your item times today’s price. A shop that buys gold has to have it melted and refined, take the risk that the price falls, and pay its staff and rent, so it offers part of that value. No rule fixes the gap, which is why the offer checker shows the share a quote pays rather than guessing it.' },
@@ -33,7 +34,7 @@ export const HOME: HomeText = {
 <p>Have a coin or a bar sold by the ounce, or gold bought by the tola? The ${h.a('ounce', 'ounce page')} and the ${h.a('tola', 'tola page')} convert those weights and value them.</p>
 
 <h2>Turning a buyer’s offer into a percentage</h2>
-<p><strong>A percentage tells you how much of your gold you are really being paid for.</strong> Buyers quote a price per gram of 9ct or a single sum for the lot, and neither says what share of the gold value you get. If a shop offers ${h.gbp(Math.round(h.at(10, 375) * 0.7))} for the 10 g chain above, that is ${h.pct(Math.round(h.at(10, 375) * 0.7) / h.at(10, 375), 0)} of the gold value at the price we recorded. The ${h.a('offer', 'offer checker')} does this with the latest price, and the ${h.a('where-to-sell', 'page on where to sell')} compares high street shops, postal buyers, pawnbrokers and bullion dealers by what they do with your gold rather than by what they say about themselves.</p>
+<p><strong>A percentage tells you how much of your gold you are really being paid for.</strong> Buyers quote a price per gram of 9ct or a single sum for the lot, and neither says what share of the gold value you get. If a shop offers ${h.gbp(exampleOffer(10, 9, 0.7))} for the 10 g chain above, that is ${h.pct(exampleOffer(10, 9, 0.7) / h.at(10, 375), 1)} of the gold value at the price we recorded: the same example the offer checker opens with. The ${h.a('offer', 'offer checker')} does this with the latest price, and the ${h.a('where-to-sell', 'page on where to sell')} compares high street shops, postal buyers, pawnbrokers and bullion dealers by what they do with your gold rather than by what they say about themselves.</p>
 <p>Two habits help. Ask for the quote per gram <em>and</em> by carat, so you can check each line; and ask for the weight they recorded, so you can compare it with yours. A quote given before the item is weighed is not a quote.</p>
 
 <h2>Hallmarks: reading the numbers on your gold</h2>

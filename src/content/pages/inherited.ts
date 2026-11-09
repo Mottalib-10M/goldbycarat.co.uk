@@ -1,6 +1,6 @@
 import { definePage } from '../../lib/page-types';
 export default definePage({
-  id: 'inherited', group: 'sell', order: 23, tool: 'cgt', toolProps: { kind: 'chattel' }, kind: 'guide',
+  id: 'inherited', group: 'sell', order: 21, tool: 'cgt', toolProps: { kind: 'chattel' }, kind: 'guide',
   related: ['cgt', 'scrap', 'sovereign', 'where-to-sell'], sources: ['tcga262', 'govChattels', 'govChattelsGain', 'govCgtRates', 'govCgtAllowance', 'tcga21', 'cg78300'],
   slug: 'selling-inherited-gold', nav: 'Selling inherited gold', card: 'What it was worth when the person died, the {chattel} tax-free limit, and coins that are never taxed',
   title: 'Selling Inherited Gold Jewellery UK: Value and Tax Rules',

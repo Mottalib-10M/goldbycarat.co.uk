@@ -1,6 +1,6 @@
 import { definePage } from '../../lib/page-types';
 export default definePage({
-  id: 'where-to-sell', group: 'sell', order: 22, tool: 'compare', toolProps: { ct: 9, grams: 25 }, kind: 'guide',
+  id: 'where-to-sell', group: 'sell', order: 23, tool: 'compare', toolProps: { ct: 9, grams: 10 }, kind: 'guide',
   related: ['offer', 'scrap', 'sovereign', 'inherited'], sources: ['hallmarkSch2', 'tcga21', 'tcga262'],
   slug: 'where-to-sell-gold', nav: 'Where to sell gold', card: 'Shops, postal buyers, pawnbrokers, dealers and auctions compared',
   title: 'Where to Sell Gold in the UK: Compare Offers by % of Metal',

@@ -1,5 +1,5 @@
 /** Pièces communes aux calculateurs : cadre, lignes de résultat, ligne du cours avec son heure. */
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import SelectField from '../ui/SelectField';
 import { P, SNAPSHOT, type Metal } from '../../lib/engine/params';
 import { refreshSpot, type Spot } from '../../lib/live';
@@ -8,10 +8,13 @@ import { formatNumber } from '../../lib/format';
 
 export const METAL_NAME: Record<Metal, string> = { XAU: 'Gold', XAG: 'Silver', XPT: 'Platinum', XPD: 'Palladium' };
 
-/** Ligne d'état du cours : métal, prix de l'once, heure du relevé, source ; signale un repli.
+/** Ligne d'état du cours : métal, prix de l'once, heure du relevé ; signale un repli.
  *  Test naïf, 3e tour (2026-11-08) : deux heures (relevé du texte, cours du calculateur) pour un même montant
  *  faisaient demander « lequel croire ? ». Si le cours lu est le même que le relevé, on garde l'heure du relevé
- *  et on dit qu'il n'a pas bougé ; s'il a bougé, on nomme le relevé utilisé par le texte (jamais en silence). */
+ *  et on dit qu'il n'a pas bougé ; s'il a bougé, on nomme le relevé utilisé par le texte (jamais en silence).
+ *  4e tour (2026-11-08, trois testeurs) : la ligne était trop chargée (once, deux heures, source, « api »).
+ *  Elle dit maintenant une chose : le prix et l'heure à laquelle il a été vérifié ; la source et le bouton
+ *  « Check for a newer price » passent dans un repli « Where this price comes from ». */
 export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
   const [note, setNote] = useState('');
   const anyFailed = metals.some((m) => spot[m].failed);
@@ -22,21 +25,46 @@ export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
         const q = spot[m];
         const snap = SNAPSHOT.gbpPerOz[m];
         const same = q.live && Math.round(q.gbpPerOz * 100) === Math.round(snap * 100);
-        const name = METAL_NAME[m];
+        const name = METAL_NAME[m].toLowerCase();
+        const price = <span className="tabular-nums">{gbp(q.gbpPerOz)}</span>;
         return (
           <p key={m}>
             <span className={`mr-1.5 inline-block h-2 w-2 rounded-full align-middle ${q.live ? 'bg-green-600' : 'bg-navy-400'}`} aria-hidden="true" />
-            <span>{q.live ? `Live ${name.toLowerCase()} price` : `${name} price, last recorded`}: <span className="tabular-nums">{gbp(q.gbpPerOz)}</span> for an ounce of pure {name.toLowerCase()} (31.1 g), {same ? <>{stamp(SNAPSHOT.at[m])}{clock(q.at) !== clock(SNAPSHOT.at[m]) && <>, still the same at {clock(q.at)}</>}</> : stamp(q.at)}. Source: gold-api.com, a free price service.{q.live && !same && <> The examples in the text use the price recorded at {clock(SNAPSHOT.at[m])}: {gbp(snap)}.</>}</span>
+            {!q.live
+              ? <span>{METAL_NAME[m]} price recorded {stamp(SNAPSHOT.at[m])}: {price} an ounce of pure {name} (31.1 g).</span>
+              : same
+                ? (clock(q.at) !== clock(SNAPSHOT.at[m])
+                  ? <span>{METAL_NAME[m]} price checked at {clock(q.at)}: {price} an ounce of pure {name} (31.1 g), unchanged since {stamp(SNAPSHOT.at[m])}.</span>
+                  : <span>{METAL_NAME[m]} price {stamp(q.at)}: {price} an ounce of pure {name} (31.1 g).</span>)
+                : <span>{METAL_NAME[m]} price {stamp(q.at)}: {price} an ounce of pure {name} (31.1 g). The examples in the text use the {clock(SNAPSHOT.at[m])} price, {gbp(snap)}.</span>}
           </p>
         );
       })}
       {anyFailed && <p className="text-amber-800">The live price could not be reached: the figures use the price recorded when this page was built, at the time shown.</p>}
-      <p>
-        <button type="button" className="underline hover:text-navy-900" onClick={() => setNote(refreshSpot(metals) ? 'Checking for a newer price…' : 'Wait a few seconds before asking again.')}>Check for a newer price</button>
-        {note && !allLive && <span className="ml-2">{note}</span>}
-      </p>
+      <details className="mt-0.5">
+        <summary className="cursor-pointer underline hover:text-navy-900">Where this price comes from</summary>
+        <p className="mt-1">It is the price traders use for pure {metals.map((m) => METAL_NAME[m].toLowerCase()).join(' and ')}, from gold-api.com, a free price service. A shop pays less. The page reads it once when it opens.</p>
+        <p className="mt-1">
+          <button type="button" className="underline hover:text-navy-900" onClick={() => setNote(refreshSpot(metals) ? 'Checking for a newer price…' : 'Wait a few seconds before asking again.')}>Check for a newer price</button>
+          {note && !allLive && <span className="ml-2">{note}</span>}
+        </p>
+      </details>
     </div>
   );
+}
+
+/** Valeurs d'exemple (test naïf, 4e tour : « 10 g → £366.99 » sans le mot « example » sur l'accueil, la page
+ *  9ct, le souverain et les poinçons). Tout calculateur pré-rempli le dit tant que rien n'a été tapé ou choisi,
+ *  et pas quand les valeurs viennent d'un lien partagé (une des clés de l'adresse est présente). */
+export function useExample(keys: string[]) {
+  const [example, setExample] = useState(true);
+  useEffect(() => { const u = new URLSearchParams(location.search); if (keys.some((k) => u.has(k))) setExample(false); }, []);
+  const typed = <T,>(f: (v: T) => void) => (v: T) => { setExample(false); f(v); };
+  return { example, typed };
+}
+
+export function ExampleNote({ children }: { children: ReactNode }) {
+  return <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">{children}</p>;
 }
 
 export function Row({ label, value, strong = false, bar }: { label: ReactNode; value: ReactNode; strong?: boolean; bar?: number }) {

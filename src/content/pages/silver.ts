@@ -3,9 +3,9 @@ export default definePage({
   id: 'silver', group: 'silver', order: 40, tool: 'silver', toolProps: { fineness: 999, unit: 'g', grams: 100 }, kind: 'outil',
   related: ['sterling-silver', 'silver-britannia', 'platinum', 'vat'], sources: ['hallmarkSch2', 'ukWeights', 'vatNotice70121'],
   slug: 'silver-price-per-gram', nav: 'Silver price per gram', card: 'Silver by gram, ounce and kilo at each hallmark standard',
-  title: 'Silver Price per Gram UK: Spot Silver in Pounds Today',
+  title: 'Price of Silver UK Today: per Gram and per Ounce in £',
   description: 'Silver price per gram, ounce and kilo in pounds at the live, timed spot price for 999, Britannia 958, sterling 925 and 800 silver, with hallmark rules.',
-  h1: 'Silver price per gram in pounds',
+  h1: 'Price of silver today: per gram and per ounce, in pounds',
   resume: 'The spot price of silver is the price of a troy ounce of pure silver, and this calculator reads it in pounds from gold-api.com, shows when it was set, and turns it into a price per gram, per ounce and per kilo at any of the four standards UK hallmarking law allows for silver: 999, 958.4 (Britannia), 925 (sterling) and 800. Choose the standard, type a weight in grams, ounces or kilos, and you get the metal value. Silver is far cheaper than gold by weight, so heavy items such as trays, candlesticks and cutlery sets can still be worth real money, while a buyer’s fixed costs take a larger share of a small lot. Silver bought from a dealer carries VAT, unlike investment gold. Gold by Carat is an independent site, not a silver buyer or a dealer, and shows no buying prices.',
   faqs: [
     { q: 'How much is a gram of silver worth?', a: 'A gram of pure silver is worth the spot price of an ounce divided by {oz2}. Sterling silver contains 925 thousandths of that, so a gram of sterling is worth 92.5% of a gram of pure silver. The calculator shows both at the price of the moment, with the time.' },
@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = h.P.silver.map((f) => [f === 925 ? '925 sterling' : f === 958.4 ? '958.4 Britannia' : String(f), h.gbp2(h.at(1, f, 'XAG')), h.gbp2(h.at(31.1034768, f, 'XAG')), h.gbp(h.at(1000, f, 'XAG'))]);
     return `
-<h2>Silver price by standard</h2>
+<h2>Silver price per gram and per ounce, by standard</h2>
 ${h.table(['Standard', 'Per gram', 'Per troy oz', 'Per kg'], rows, `Example worked out at the silver price of ${h.when}.`)}
 
 <h2>The four silver standards</h2>

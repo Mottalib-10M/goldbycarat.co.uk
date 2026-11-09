@@ -9,8 +9,10 @@ export const GROUPS_ORDER: Group[] = ['gold', 'sell', 'coins', 'silver', 'rules'
 export const label = (id: string, _lang: Locale = 'en') => CORE[id] ?? pageById(id)?.nav ?? id;
 const link = (id: string, lang: Locale): NavLink => ({ href: route(id, lang), label: label(id, lang) });
 const inGroup = (g: Group, lang: Locale) => PAGES.filter((p) => p.group === g).map((p) => link(p.id, lang));
+// Menu ☰ : la vente d'abord (test naïf, 4e tour) ; le reste du site garde GROUPS_ORDER.
+const MENU_ORDER: Group[] = ['sell', 'gold', 'coins', 'rules', 'silver'];
 export const navCategories = (lang: Locale, court = true): NavCategory[] =>
-  GROUPS_ORDER.map((g) => ({ label: court ? COURT[g] : GROUP_LABEL[g], links: inGroup(g, lang) })).filter((c) => c.links.length);
+  (court ? MENU_ORDER : GROUPS_ORDER).map((g) => ({ label: court ? COURT[g] : GROUP_LABEL[g], links: inGroup(g, lang) })).filter((c) => c.links.length);
 export const navDirect = (_lang: Locale): NavLink[] => [];
 export const footerColumns = (lang: Locale): NavCategory[] => [
   { label: GROUP_LABEL.gold, links: [link('home', lang), ...inGroup('gold', lang)] },

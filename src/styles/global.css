@@ -94,3 +94,17 @@ h1 { font-weight: 700; } h2 { font-weight: 650; } h3 { font-weight: 600; }
   .clamp-more { display: inline-block; cursor: pointer; margin-top: .25rem; font-size: .875rem; font-weight: 600; color: var(--color-accent-700); text-decoration: underline; text-underline-offset: 3px; }
   .clamp-toggle:focus-visible ~ .clamp-more { outline: 2px solid var(--color-accent-500); outline-offset: 3px; }
 }
+
+/* Sections repliées sous leur titre (lib/replis.ts ; testeurs naïfs, 4e tour) : un titre cliquable par
+   section, signe + / − à droite, le texte reste dans le HTML. */
+details.pli { border-top: 1px solid var(--color-navy-200); }
+details.pli + details.pli { margin-top: 0; }
+details.pli > summary { display: flex; align-items: center; justify-content: space-between; gap: .75rem; cursor: pointer; list-style: none; padding: .7rem 0; }
+details.pli > summary::-webkit-details-marker { display: none; }
+details.pli > summary::after { content: '+'; flex: none; width: 1.75rem; height: 1.75rem; border-radius: 9999px; border: 1px solid var(--color-navy-300); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; color: var(--color-accent-700); }
+details.pli[open] > summary::after { content: '−'; }
+details.pli > summary h2, .prose details.pli > summary h2 { margin: 0; padding: 0; border: 0; font-size: 1.15rem; line-height: 1.35; }
+details.pli > summary:focus-visible { outline: 2px solid var(--color-accent-500); outline-offset: 3px; }
+.prose details.pli { margin: 0; }
+.prose details.pli:last-of-type { border-bottom: 1px solid var(--color-navy-200); }
+.pli-aide { margin-top: 1.5rem; font-size: .875rem; color: var(--color-navy-600); }

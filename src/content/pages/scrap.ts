@@ -1,6 +1,6 @@
 import { definePage } from '../../lib/page-types';
 export default definePage({
-  id: 'scrap', group: 'sell', order: 20, tool: 'scrap', kind: 'outil',
+  id: 'scrap', group: 'sell', order: 22, tool: 'scrap', kind: 'outil',
   related: ['offer', 'where-to-sell', 'carat-9', 'inherited'], sources: ['hallmarkSch2', 'tcga262'],
   slug: 'scrap-gold-price', nav: 'Scrap gold price', card: 'A mixed lot of 9ct, 14ct, 18ct and 22ct valued in one go',
   title: 'Scrap Gold Price UK: Value a Mixed Lot by Carat Today',
@@ -26,6 +26,6 @@ ${h.table(['Example lot', 'Weight', 'Gold inside', 'Metal value'], [['9ct chains
 <p><strong>Selling a few items of jewellery almost never creates a tax bill.</strong> Each item, or set sold together, sold for {chattel} or less is free of Capital Gains Tax, the tax on a profit when you sell something (${h.src('tcga262', 'the rule')}). The ${h.a('inherited', 'page on inherited gold')} covers jewellery that came from someone who has died.</p>
 
 <h2>Comparing two or three quotes</h2>
-<p><strong>Got several quotes for the whole lot? Type each one in turn in the offer box at the top of the page.</strong> Each time, the calculator shows the share of the gold in your lot that the quote pays: the highest share is the best offer. The ${h.a('where-to-sell', 'guide to where to sell')} compares the types of buyer.</p>
+<p><strong>Got several quotes for the whole lot? Type each one in turn in the offer box at the top of the page.</strong> Each time, the calculator shows the share of the gold in your lot that the quote pays: the highest share is the best offer. The side-by-side comparison on the ${h.a('offer', 'offer checker')} works for gold of a single carat; a mixed lot is compared here, one quote after the other. The ${h.a('where-to-sell', 'guide to where to sell')} compares the types of buyer.</p>
 `,
 });

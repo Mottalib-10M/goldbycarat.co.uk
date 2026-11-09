@@ -12,6 +12,7 @@ import { label } from '../i18n/nav';
 import { t } from '../i18n/ui';
 import { pageById } from '../lib/pages';
 import { helpers, fill } from '../lib/helpers';
+import { replierSections } from '../lib/replis';
 import { P } from '../lib/engine/params';
 import { articleSchema, faqSchema, breadcrumbSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
 import { AUTHOR_NAME } from '../data/site-config';
@@ -22,7 +23,7 @@ const lang = 'en' as const;
 const x = { title: fill(page.title), description: fill(page.description), h1: fill(page.h1), resume: fill(page.resume), nav: page.nav, faqs: page.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a), open: f.open })) };
 const ui = t(lang);
 const path = route(page.id, lang);
-const body = fill(page.body(helpers()));
+const body = replierSections(fill(page.body(helpers())), 1);
 const parts = body.split(/<!--tool:([a-z]+)-->/);
 const jsonLd = [articleSchema({ title: x.h1, description: x.description, path, lang }), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), breadcrumbSchema([{ name: ui.breadcrumbHome, path: route('home', lang) }, { name: x.nav, path }])];
 if (x.faqs.length) jsonLd.push(faqSchema(x.faqs, lang));
@@ -39,7 +40,7 @@ const tp = page.toolProps ?? {};
     </div>
     <p class="mb-8 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline hover:text-navy-900">{label('method', lang)}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a></p>
     <div class="prose prose-slate max-w-none">
-      {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div class="not-prose my-6" data-chrome><Tool client:load tool={p} idp={`m${i}`} {...tp} mini /></div>)}
+      {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div id={p} class="not-prose my-6 scroll-mt-20" data-chrome><Tool client:load tool={p} idp={`m${i}`} {...tp} mini /></div>)}
     </div>
   </article>
 </PageLayout>

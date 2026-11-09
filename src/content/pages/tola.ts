@@ -16,7 +16,7 @@ export default definePage({
     const t = 180 * 0.06479891;
     const rows = [1, 2, 5, 10, 20].map((n) => [`${n} tola`, h.num(n * t, 2) + ' g', h.live(h.at(n * t, 916.6), 'XAU'), h.live(h.at(n * t, 875), 'XAU'), h.live(h.at(n * t, 999), 'XAU')]);
     return `
-<h2>Tolas in pounds</h2>
+<h2>Gold price per tola for 22ct, 21ct and 24ct</h2>
 ${h.table(['Tolas', 'Grams', '22ct', '21ct', '24ct'], rows, `Tola of 180 grains; worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Where the tola weight comes from</h2>

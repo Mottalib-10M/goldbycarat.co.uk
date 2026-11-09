@@ -13,7 +13,7 @@ export default definePage({
     { q: 'Why does a Krugerrand weigh more than an ounce?', a: 'Because it is 916.7 fine: the ounce is the gold it contains, and alloy metal makes up the rest of the coin. By arithmetic the whole coin weighs about one ounce divided by 0.9167. Scales showing more than {oz2} g are therefore expected and not a sign of anything wrong.' },
   ],
   body: (h) => `
-<h2>Same gold, different tax</h2>
+<h2>Krugerrand value in pounds: same gold, different tax</h2>
 ${h.table(['Coin', 'Fine gold', 'Fineness', 'Metal value', 'Capital Gains Tax'], [['Krugerrand 1 oz', '1 oz', '916.7', h.live(h.at(31.1034768, 1000), 'XAU'), 'Chargeable, chattel rule'], ['Maple Leaf 1 oz', '1 oz', '999', h.live(h.at(31.1034768, 1000), 'XAU'), 'Chargeable, chattel rule'], ['Britannia 1 oz', '1 oz', '999.9', h.live(h.at(31.1034768, 1000), 'XAU'), 'Outside CGT (sterling)']], `Worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Specifications</h2>

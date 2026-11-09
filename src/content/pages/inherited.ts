@@ -13,7 +13,7 @@ export default definePage({
     { q: 'Should executors sell gold before distributing the estate?', a: 'It depends on the will and the beneficiaries. If the executors sell, any gain since the date of death is the estate’s and is taxed under the rules for personal representatives. If they hand the gold over, the beneficiary takes it at the probate value and any later gain is theirs. A solicitor or tax adviser can advise on a large estate.' },
   ],
   body: (h) => `
-<h2>Step one: know what the gold is worth</h2>
+<h2>Step one: before selling inherited gold, know what it is worth</h2>
 <p>Before any tax question, sort the pieces by hallmark and weigh them. The ${h.a('scrap', 'scrap gold calculator')} gives the metal value of a mixed lot at the price of the moment, and the ${h.a('sovereign', 'sovereign page')} values coins without weighing. Set aside anything that might sell better as jewellery than as metal: a signed piece, a period brooch, a ring with a significant stone. An auction house or jeweller can give an opinion on those.</p>
 <p>Compare what you find with the estate’s valuation. If the metal is now worth much more than the probate value, the gain matters; if it is worth about the same or less, there is no gain to tax.</p>
 

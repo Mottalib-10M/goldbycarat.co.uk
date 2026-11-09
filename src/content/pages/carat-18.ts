@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [1, 2, 3, 5, 10, 20].map((g) => [`${g} g`, h.num(g * 0.75, 2) + ' g', h.live(h.at(g, 750), 'XAU')]);
     return `
-<h2>18ct gold value by weight</h2>
+<h2>18ct gold price by weight</h2>
 ${h.table(['Weight of 18ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>A plain 18ct wedding band of 4 or 5 g, a common weight, sits in the middle of that table. A man’s signet ring may weigh twice as much; a fine chain much less.</p>
 

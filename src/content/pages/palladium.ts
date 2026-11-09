@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = h.P.palladium.map((f) => [String(f), h.live(h.at(1, f, 'XPD'), 'XPD', 'gbp2'), h.live(h.at(5, f, 'XPD'), 'XPD'), h.live(h.at(10, f, 'XPD'), 'XPD')]);
     return `
-<h2>Palladium by standard and weight</h2>
+<h2>Palladium price per gram, by standard and weight</h2>
 ${h.table(['Standard', 'Per gram', '5 g', '10 g'], rows, `Worked out at the same palladium price as the calculator above (${h.whenOf('XPD')}).`)}
 <p>When this page was built (${h.recorded}), a troy ounce of palladium was ${h.gbp(h.at(31.1034768, 1000, 'XPD'))} against ${h.gbp(h.at(31.1034768, 1000, 'XPT'))} for platinum and ${h.gbp(h.at(31.1034768, 1000))} for gold; the calculator above gives the palladium price of the moment.</p>
 

@@ -25,7 +25,7 @@ ${h.table(['Share of the gold value', 'Offer on 10 g of 9ct', 'Kept by the buyer
 <h2>Check the weight and the carat too</h2>
 <p>A percentage is only as good as the weight and carat behind it. Ask the buyer for both, in writing if possible. If its weight is lower than yours, ask why: stones removed, a spring taken out, or a scale error. If it says the carat is lower than the hallmark, ask for the test result. A British hallmark from an official testing office means the piece met ${h.src('hallmarkSch2', 'the legal standard')} when it was marked.</p>
 
-<h2>Several quotes at once</h2>
+<h2>Checking several gold offers at once</h2>
 <p><strong>Got two or three quotes? Type them below to see which pays the biggest share of your gold.</strong> The comparison puts them side by side as percentages; the figures already filled in are only examples. For a lot of several carats, use the ${h.a('scrap', 'scrap gold calculator')} instead: it takes the weight of each carat and one offer for the whole lot. The ${h.a('where-to-sell', 'guide to where to sell')} explains how each type of buyer works.</p>
 <!--tool:compare-->
 `;

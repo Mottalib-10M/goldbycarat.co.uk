@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = h.P.platinum.map((f) => [String(f), h.live(h.at(1, f, 'XPT'), 'XPT', 'gbp2'), h.live(h.at(5, f, 'XPT'), 'XPT'), h.live(h.at(10, f, 'XPT'), 'XPT')]);
     return `
-<h2>Platinum by standard and weight</h2>
+<h2>Platinum price per gram, by standard and weight</h2>
 ${h.table(['Standard', 'Per gram', '5 g', '10 g'], rows, `Worked out at the same platinum price as the calculator above (${h.whenOf('XPT')}).`)}
 <p>For comparison, when this page was built (${h.recorded}), a troy ounce of gold was ${h.gbp(h.at(31.1034768, 1000))} and a troy ounce of platinum ${h.gbp(h.at(31.1034768, 1000, 'XPT'))}; the calculator above gives the platinum price of the moment.</p>
 

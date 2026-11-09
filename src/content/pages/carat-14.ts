@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [1, 2, 5, 10, 20, 50].map((g) => [`${g} g`, h.live(h.at(g, 585), 'XAU'), h.live(h.at(g, 583.3), 'XAU'), h.live(h.at(g, 585) - h.at(g, 583.3), 'XAU')]);
     return `
-<h2>14ct value by weight, and the 585 question</h2>
+<h2>14ct gold price by weight, and the 585 question</h2>
 ${h.table(['Weight', 'At 585 (UK standard)', 'At 583.3 (14/24)', 'Difference'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>The difference between the two columns is small, a few pence on a ring, and that is the point: the legal standard is a floor, set just above the arithmetic, so a hallmarked 585 article never contains less gold than 14 carats. ${h.src('hallmarkSch2', 'UK hallmarking law')} lists 585 among the standards for gold, and ${h.src('hallmarkSch1', 'the hallmarking law')} maps 14 carat to it.</p>
 

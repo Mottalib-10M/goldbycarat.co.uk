@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [1, 2, 5, 10, 20, 50, 100].map((g) => [`${g} g`, h.num(g * 0.375, 3) + ' g', h.live(h.at(g, 375), 'XAU')]);
     return `
-<h2>9ct gold value by weight</h2>
+<h2>9ct gold price by weight</h2>
 ${h.table(['Weight of 9ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>The table is useful for a quick check against a quote, because most offers for 9ct come as a price per gram. Divide the per-gram offer by the per-gram metal value and you have the share. Or type both into the calculator and let it divide.</p>
 

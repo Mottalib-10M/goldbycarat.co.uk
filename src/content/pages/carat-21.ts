@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [5, 10, 20, 50, 100].map((g) => [`${g} g`, h.live(h.at(g, 875), 'XAU'), h.live(h.at(g, 916.6), 'XAU'), h.live(h.at(g, 750), 'XAU')]);
     return `
-<h2>21ct value by weight, next to its neighbours</h2>
+<h2>21ct gold price by weight, next to its neighbours</h2>
 ${h.table(['Weight', '21ct (875)', '22ct (916.6)', '18ct (750)'], rows, `Worked out at the same gold price as the calculator above (${h.when}). 21ct is shown at a straight 21/24 as a guide.`)}
 
 <h2>Why 21ct has no British standard</h2>

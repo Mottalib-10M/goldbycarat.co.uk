@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [50, 100, 250, 500, 1000, 2000].map((g) => [`${g} g`, h.num(g * 0.925, 0) + ' g', h.live(h.at(g, 925, 'XAG'), 'XAG')]);
     return `
-<h2>Sterling silver by weight</h2>
+<h2>Sterling silver value by weight</h2>
 ${h.table(['Weight of sterling', 'Pure silver', 'Metal value'], rows, `Worked out at the same silver price as the calculator above (${h.whenOf('XAG')}).`)}
 
 <h2>Reading the mark</h2>

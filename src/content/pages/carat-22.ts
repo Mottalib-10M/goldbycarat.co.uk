@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [5, 10, 20, 40, 50, 100].map((g) => [`${g} g`, h.num(g * 0.9166, 2) + ' g', h.live(h.at(g, 916.6), 'XAU')]);
     return `
-<h2>22ct gold value by weight</h2>
+<h2>22ct gold price by weight</h2>
 ${h.table(['Weight of 22ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>Weights in this table run higher than on the 9ct and 18ct pages because 22ct is usually sold by weight in sets: a bangle can weigh more than a whole box of 9ct chains.</p>
 

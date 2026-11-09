@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = [8, 9, 10, 12, 14, 15, 18, 20, 21, 22, 24].map((k) => { const legal = h.P.gold.find((g) => g.ct === k && g.hallmark); const f = legal ? legal.fineness : Math.round(k / 24 * 10000) / 10; return [`${k}ct`, h.num(f, f % 1 ? 1 : 0), legal ? 'UK standard' : 'Proportion only', h.live(h.at(1, f), 'XAU', 'gbp2')]; });
     return `
-<h2>Carats and thousandths side by side</h2>
+<h2>Carats and fineness in thousandths, side by side</h2>
 ${h.table(['Carat', 'Thousandths', 'Status', 'Per gram'], rows, `Gram price worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Where the law departs from the arithmetic</h2>

@@ -15,7 +15,7 @@ export default definePage({
   body: (h) => {
     const rows = h.P.barSizesGrams.map((g) => [Math.abs(g - 31.1034768) < 0.001 ? '1 troy oz' : g >= 1000 ? '1 kg' : `${h.num(g, g % 1 ? 1 : 0)} g`, h.live(h.at(g, 999.9), 'XAU')]);
     return `
-<h2>Metal in each bar size</h2>
+<h2>Metal value of each gold bar size</h2>
 ${h.table(['Bar', 'Gold at 999.9'], rows, `Worked out at the same gold price as the calculator above (${h.when}). Sizes from the list of accepted weights in HMRC VAT Notice 701/21.`)}
 
 <h2>Premium: what you pay above the metal</h2>

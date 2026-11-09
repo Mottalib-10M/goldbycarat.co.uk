@@ -28,7 +28,7 @@ export default definePage({
 <h3>Foreign coins: taxed like jewellery</h3>
 <p>Krugerrands, Maple Leafs, Eagles and Philharmonics are money in their own countries, but not British money, and ${h.src('cg78300', 'HMRC, the UK tax office,')} says foreign money can be taxed. As coins, they also fall within the personal possessions rules, so the {chattel} limit applies to each sale. Larger sales are taxed like any other gain.</p>
 
-<h2>Worked examples</h2>
+<h2>Capital Gains Tax on gold: worked examples</h2>
 <p><strong>Below {chattel} a sale is tax-free; just above it, only a small part of the profit is taxed.</strong></p>
 <p>Each line takes the profit, keeps only the part the law lets be taxed, takes off the tax-free allowance of {cgt.allowance}, and taxes what is left at {cgt.basic}.</p>
 ${h.table(['Sale', 'Profit', 'Profit that can be taxed', 'Minus tax-free allowance', 'Left to tax', 'Tax'], rows.map(([l, k, s, c]) => { const r = ex(k, s, c); const none = r.rule === 'out-of-scope' || r.rule === 'chattel-exempt'; return [l, h.gbp(r.rawGain), r.rule === 'out-of-scope' ? 'None: British coins' : none ? 'None: sold for {chattel} or less' : h.gbp(r.gain), none ? '–' : `− ${h.gbp(r.allowanceUsed)}`, none ? '–' : h.gbp(r.taxable), h.gbp(r.tax)]; }), 'Income of £30,000 a year, not counting the first part of income that is tax-free; no other profits in the tax year; costs in the examples are made up for illustration.')}

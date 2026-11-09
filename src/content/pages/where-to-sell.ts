@@ -13,7 +13,7 @@ export default definePage({
     { q: 'Where should I sell gold sovereigns?', a: 'To a bullion dealer or coin dealer rather than a scrap buyer. Sovereigns are traded as coins, and dealers buy them at a price linked to the gold price per coin, sometimes with a premium for rare dates. A scrap buyer that melts them pays for the gold only.' },
   ],
   body: (h) => `
-<h2>Five kinds of buyer</h2>
+<h2>Where to sell gold: five kinds of buyer</h2>
 <h3>High street gold buyers and jewellers</h3>
 <p>You walk in, they test and weigh in front of you and offer a sum. The advantage is control: the gold never leaves your sight until you accept, and you can walk out and try the next shop. Ask for the weight per carat and the rate per gram, and write both down. Shops that buy as well as sell jewellery may pay more for pieces they can put in the window.</p>
 <h3>Postal buyers</h3>

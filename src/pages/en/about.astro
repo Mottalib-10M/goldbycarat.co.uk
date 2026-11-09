@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { PAGES } from '../../lib/pages';
+import { P } from '../../lib/engine/params';
+const lang = 'en';
+const n = PAGES.length + 1;
+const nSrc = Object.keys(P.sources).length;
+---
+<PageLayout title="Gold by Carat: who works out these gold values, and how" description="Who publishes Gold by Carat, why it turns the live gold price into the metal value of British hallmarked gold, and why it is not a gold buyer or a dealer." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Who works out the values on Gold by Carat</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Gold by Carat is published by Radif Partners, a company that builds calculators on public data. It is for people in the United Kingdom who have gold or silver to sell, to value or to buy: a drawer of broken chains, a set of 22ct wedding bangles, a few sovereigns from a grandparent, a sterling cutlery canteen nobody uses.</p>
+    <h2>Why this site exists</h2>
+    <p>Search for the price of 9ct gold and the first pages are run by gold buyers. They print their own buying price per gram, with no date and no spot price beside it, so you cannot tell what share of the gold they are paying. This site does the opposite: it shows the metal value from the legal fineness and the live spot price, with the time of that price, and turns any offer into a percentage of it. We print no buyer’s price, and we rank no buyer.</p>
+    <h2>Where the figures come from</h2>
+    <p>The fineness of each carat and the hallmark rules come from the Hallmarking Act 1973; the weight of the troy ounce and grain from the Weights and Measures Act 1985; the weights of sovereigns from the Coinage Act 1971; the gold content of modern coins from the Royal Mint’s specifications; tax rules from legislation.gov.uk, GOV.UK and HMRC. The parameter file cites {nSrc} pages, all read on {displayDate(P.retrieved_at, 'en-GB')}. The spot price comes from gold-api.com. The <a href={route('method', lang)}>method page</a> gives every formula and its limits.</p>
+    <h2>What we are not</h2>
+    <p>We are an independent site, not a gold buyer or a dealer. We do not buy, sell, store or value gold in person, we arrange no sales and we take no commission from any buyer or dealer. Nothing here is financial or tax advice. A hallmark question goes to an assay office; a tax question about your own affairs to HMRC or a tax adviser.</p>
+    <h2>How the site is paid for</h2>
+    <p>It is free and needs no account. If advertising is added one day, it will never sit above a calculator and it cannot use what you type, because nothing you type leaves your browser. No buyer or dealer can pay to be mentioned.</p>
+    <h2>Tell us when a figure is wrong</h2>
+    <p>Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with the page, the values you entered and the source you rely on. The <a href={route('editorial', lang)}>editorial policy</a> explains how a correction is made. The site has {n} indexed pages, listed in the footer.</p>
+    <p class="text-sm text-navy-600">Rules last read on <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'en-GB')}</time>.</p>
+  </div>
+</PageLayout>

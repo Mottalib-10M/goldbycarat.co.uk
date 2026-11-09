@@ -1,0 +1,45 @@
+---
+/**
+ * Rendu d'une page de `src/content/pages/`. Ordre (RECETTE §5, §9.3, §21) : H1, bloc citable replié
+ * (un seul <p>, première phrase visible), outil (premier écran), puis le corps ; FAQ, pages liées,
+ * sources et encart auteur viennent du PageLayout, FAQ affichée et balisée depuis la même liste (§7).
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Tool from './calc/Tool';
+import Clamp from './Clamp.astro';
+import { route, ROUTES } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { t } from '../i18n/ui';
+import { pageById } from '../lib/pages';
+import { helpers, fill } from '../lib/helpers';
+import { P } from '../lib/engine/params';
+import { articleSchema, faqSchema, breadcrumbSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { AUTHOR_NAME } from '../data/site-config';
+import type { PageDef } from '../lib/page-types';
+interface Props { page: PageDef }
+const { page } = Astro.props;
+const lang = 'en' as const;
+const x = { title: fill(page.title), description: fill(page.description), h1: fill(page.h1), resume: fill(page.resume), nav: page.nav, faqs: page.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a), open: f.open })) };
+const ui = t(lang);
+const path = route(page.id, lang);
+const body = fill(page.body(helpers()));
+const parts = body.split(/<!--tool:([a-z]+)-->/);
+const jsonLd = [articleSchema({ title: x.h1, description: x.description, path, lang }), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), breadcrumbSchema([{ name: ui.breadcrumbHome, path: route('home', lang) }, { name: x.nav, path }])];
+if (x.faqs.length) jsonLd.push(faqSchema(x.faqs, lang));
+const related = page.related.map((id) => { if (!ROUTES.some((r) => r.id === id)) throw new Error(`${page.id} : page liée inconnue ${id}`); return { href: route(id, lang), name: label(id, lang), description: fill(pageById(id)?.card ?? '') }; });
+const sources = [...new Set(['goldApi', ...page.sources])].map((k) => ({ name: P.sources[k].label.en, url: P.sources[k].url }));
+const tp = page.toolProps ?? {};
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} related={related} sources={sources} breadcrumbs={[{ label: x.nav }]}>
+  <article>
+    <h1 class="mb-2 text-[1.6rem] font-bold leading-tight text-navy-900 sm:text-3xl">{x.h1}</h1>
+    <Clamp text={x.resume} lang={lang} id={`clamp-${page.id}`} label={ui.readMore} class="mb-3" />
+    <div {...(page.kind === 'outil' ? { 'data-outil': '' } : {})} class="mb-3">
+      <Tool client:load tool={page.tool} idp={page.id.slice(0, 3)} {...tp} />
+    </div>
+    <p class="mb-8 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline hover:text-navy-900">{label('method', lang)}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a></p>
+    <div class="prose prose-slate max-w-none">
+      {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div class="not-prose my-6" data-chrome><Tool client:load tool={p} idp={`m${i}`} {...tp} mini /></div>)}
+    </div>
+  </article>
+</PageLayout>

@@ -1,0 +1,22 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Contact ${SITE_NAMES[lang]}: a figure, a source, the widget`} description="Write to Gold by Carat when a fineness, a coin weight, a tax rule or a calculation looks wrong, or to embed the gold price calculator on your own site, free of charge." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. A person reads every message.</p>
+    <h2>A figure looks wrong</h2>
+    <p>Send the page address, the values you entered and the figure you expected, with the law, HMRC page or Royal Mint specification you rely on if you have it. We reread the source, correct the parameter file or the engine, add a test for the case and date the change.</p>
+    <h2>What we cannot do</h2>
+    <p>We are not a gold buyer or a dealer. We cannot value an item from a photograph, test a piece, buy or sell gold, recommend a buyer or advise on your tax. Please do not send photographs of your jewellery or personal details. Hallmark questions can go to any UK assay office; tax questions to HMRC or a tax adviser; a dispute with a seller to Citizens Advice.</p>
+    <h2>Using the calculator on your own site</h2>
+    <p>Bloggers, advice services and jewellers can show the gold price calculator in an iframe at no cost. The code and the conditions are on the <a href={route('widget', lang)}>embed page</a>.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

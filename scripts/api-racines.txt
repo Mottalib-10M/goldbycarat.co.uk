@@ -1,0 +1,2 @@
+# Cours des métaux en GBP, appelé par le navigateur (src/lib/live.ts) et au build (scripts/fetch-spot.mjs) : https://api.gold-api.com/price/<XAU|XAG|XPT|XPD>/GBP. Conditions citées : https://gold-api.com/terms
+https://api.gold-api.com/price/

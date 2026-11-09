@@ -1,0 +1,43 @@
+---
+/**
+ * Accueil (pilier) : titre, une ligne, prix du gramme par carat (simulateur, premier écran), bloc
+ * citable replié, puis le corps (titres légaux, offre d'acheteur, pièces, argent, impôts), FAQ.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Tool from './calc/Tool';
+import Clamp from './Clamp.astro';
+import { HOME } from '../content/home';
+import { helpers, fill } from '../lib/helpers';
+import { route } from '../i18n/routes';
+import { label, navCategories } from '../i18n/nav';
+import { t } from '../i18n/ui';
+import { P } from '../lib/engine/params';
+import { organizationSchema, websiteSchema, webApplicationSchema, faqSchema, webPageSchema } from '../lib/seo';
+import { AUTHOR_NAME } from '../data/site-config';
+const lang = 'en' as const;
+const H = HOME;
+const x = { title: fill(H.title), description: fill(H.description), h1: fill(H.h1), lead: fill(H.lead), resume: fill(H.resume), faqs: H.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a) })) };
+const body = fill(H.body(helpers()));
+const parts = body.split(/<!--tool:([a-z]+)-->/);
+const path = route('home', lang);
+const ui = t(lang);
+const jsonLd = [organizationSchema(lang), websiteSchema(lang), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), webPageSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(x.faqs, lang)];
+const sources = ['goldApi', 'hallmarkSch1', 'hallmarkSch2', 'ukWeights', 'coinageAct', 'rmSovereign', 'tcga21', 'tcga262', 'govCgtRates', 'vatNotice70121'].map((k) => ({ name: P.sources[k].label.en, url: P.sources[k].url }));
+const cats = navCategories(lang, false);
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} sources={sources}>
+  <h1 class="mb-1 text-[1.6rem] font-bold leading-tight text-navy-900 sm:text-3xl">{x.h1}</h1>
+  <p class="mb-3 text-navy-700">{x.lead}</p>
+  <div class="mb-3"><Tool client:load tool="board" idp="b" ct={9} grams={10} /></div>
+  <Clamp text={x.resume} lang={lang} id="clamp-home" label={ui.readMore} class="mb-3" />
+  <p class="mb-8 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline hover:text-navy-900">{label('method', lang)}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a></p>
+  <div class="prose prose-slate max-w-none">
+    {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div class="not-prose my-6" data-chrome><Tool client:load tool={p} idp={`h${i}`} mini /></div>)}
+  </div>
+  <section class="mt-12" data-chrome>
+    <h2 class="mb-4 text-2xl font-bold text-navy-900">All calculators and guides</h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {cats.map((c) => (<div><h3 class="mb-2 font-semibold text-navy-900">{c.label}</h3><ul class="space-y-1 text-sm">{c.links.map((l) => <li><a href={l.href} class="text-accent-700 hover:underline">{l.label}</a></li>)}</ul></div>))}
+    </div>
+  </section>
+</PageLayout>

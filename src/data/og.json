@@ -1,0 +1,13 @@
+{
+ "accent": "#7A5A12",
+ "symbol": "Au",
+ "variants": [
+  {
+   "file": "og-en.png",
+   "title": "Gold price per gram UK\nby carat, with the time",
+   "subtitle": "9ct · 18ct · 22ct · sovereigns · silver · offer checker",
+   "badge": "Hallmarking Act fineness · live ounce price",
+   "brand": "Gold by Carat"
+  }
+ ]
+}

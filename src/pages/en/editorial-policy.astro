@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { displayDate } from '../../lib/format';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources, tests, fixes`} description="Which laws, HMRC pages and Royal Mint specifications Gold by Carat uses, why it prints no buyer’s prices, how the engine is tested and how an error is put right." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>People read these pages just before they hand their gold to a buyer, or when they are deciding whether an inheritance creates a tax bill. A wrong fineness, a wrong coin weight or an invented “typical buying rate” could cost them money. So every figure on the site is computed from a cited source, never typed into a page.</p>
+    <h2>Who is responsible</h2><p>{AUTHOR_NAME}, reachable at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>The sources we use</h2>
+    <ul>
+      <li>the Hallmarking Act 1973 (standards of fineness, marks, exemption weights) and the British Hallmarking Council’s guidance;</li>
+      <li>the Weights and Measures Act 1985 (troy ounce, grain) and the Coinage Act 1971 (weights of gold coins);</li>
+      <li>the Royal Mint’s published specifications for the coins it sells;</li>
+      <li>the Taxation of Chargeable Gains Act 1992, HMRC’s manuals and GOV.UK for Capital Gains Tax, and HMRC VAT Notice 701/21 for VAT;</li>
+      <li>gold-api.com for the spot price of gold, silver, platinum and palladium in pounds.</li>
+    </ul>
+    <h2>What we do not publish</h2>
+    <p>No buyer’s or dealer’s prices, no ranking of named firms, no “average” buying rate. Those are private figures that change daily and that we cannot verify. Where a value could not be confirmed on an official source, such as the silver content of old British coins, we leave it out rather than guess.</p>
+    <h2>How the numbers are checked</h2>
+    <p>The engine is a set of pure functions covered by automated tests, including the worked examples GOV.UK publishes for Capital Gains Tax and the Royal Mint’s stated gold content for the sovereign and its fractions. The parameter file records the source of every value and the date it was read.</p>
+    <h2>Corrections</h2>
+    <p>When a reader reports an error, we reread the source, correct the parameter or the engine, add a test and change the date at the foot of the page. Significant corrections are noted on the page concerned.</p>
+    <p class="text-sm text-navy-600">Last reviewed on <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'en-GB')}</time>.</p>
+  </div>
+</PageLayout>

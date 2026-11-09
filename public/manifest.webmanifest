@@ -1,0 +1,21 @@
+{
+ "name": "Gold by Carat",
+ "short_name": "Gold by Carat",
+ "description": "Gold price per gram in the UK by carat, with the time of the price: 9ct, 18ct, 22ct, sovereigns, silver, and what share of the metal a buyer's offer pays.",
+ "start_url": "/en/",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#7A5A12",
+ "icons": [
+  {
+   "src": "/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

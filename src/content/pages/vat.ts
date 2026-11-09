@@ -2,7 +2,7 @@ import { definePage } from '../../lib/page-types';
 export default definePage({
   id: 'vat', group: 'rules', order: 51, tool: 'vat', toolProps: { item: 'coin' }, kind: 'guide',
   related: ['gold-bar', 'sovereign', 'silver-britannia', 'cgt'], sources: ['vatNotice70121', 'vatNotice70121A', 'vatRates'],
-  slug: 'vat-on-gold', nav: 'VAT on gold', card: 'Investment gold, jewellery and silver: the HMRC tests',
+  slug: 'vat-on-gold', nav: 'VAT on gold', card: 'VAT, the sales tax, on investment gold, jewellery and silver: the tests of HMRC, the UK tax office',
   title: 'VAT on Gold UK: Investment Gold Rules for Coins and Bars',
   description: 'VAT on gold in the UK: when bars and coins are VAT-free investment gold under HMRC Notice 701/21, the {vat.premium} test for coins, and why jewellery and silver pay {vat}.',
   h1: 'VAT on gold: what is exempt and what is not',

@@ -10,13 +10,13 @@ export default definePage({
   faqs: [
     { q: 'Why is 9ct gold so much cheaper per gram than 18ct?', a: 'Because it contains half as much gold. A gram of 9ct is {f.9} parts gold in 1,000 and the rest is mostly silver and copper, which are worth little next to gold. A gram of 18ct is {f.18} parts in 1,000, so at any gold price it is worth exactly twice as much as 9ct, give or take nothing.' },
     { q: 'Is 9ct gold real gold?', a: 'Yes. It is a gold alloy and the lowest standard that can be hallmarked as gold in the UK. An item stamped 375 with the symbol of a UK testing office has been tested and contains at least {f.9} parts gold in 1,000. Some countries do not call 9ct gold at all, so a buyer abroad may treat it differently, but in Britain it is gold in law.' },
-    { q: 'How do I weigh 9ct gold at home accurately enough?', a: 'Use digital kitchen or jewellery scales that read to 0.1 g, set them to zero with nothing on them, then weigh each item separately. Remove anything that is not gold, such as a watch movement or a leather cord. For rings with stones the weight will overstate the gold, so treat the result as a ceiling.' },
+    { q: 'How do I weigh 9ct gold at home accurately enough?', a: 'Use digital kitchen or jewellery scales. Scales that read to 0.1 g are best; scales that show whole grams still give a fair idea, within half a gram. Set them to zero with nothing on them, then weigh each item separately. Remove anything that is not gold, such as a watch movement or a leather cord. For rings with stones the weight will overstate the gold, so treat the result as a ceiling.' },
   ],
   body: (h) => {
-    const rows = [1, 2, 5, 10, 20, 50, 100].map((g) => [`${g} g`, h.num(g * 0.375, 3) + ' g', h.gbp(h.at(g, 375))]);
+    const rows = [1, 2, 5, 10, 20, 50, 100].map((g) => [`${g} g`, h.num(g * 0.375, 3) + ' g', h.live(h.at(g, 375), 'XAU')]);
     return `
 <h2>9ct gold value by weight</h2>
-${h.table(['Weight of 9ct', 'Pure gold inside', 'Metal value'], rows, `Example worked out at the gold price of ${h.when}; the calculator above uses the price of the moment.`)}
+${h.table(['Weight of 9ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>The table is useful for a quick check against a quote, because most offers for 9ct come as a price per gram. Divide the per-gram offer by the per-gram metal value and you have the share. Or type both into the calculator and let it divide.</p>
 
 <h2>Where the 375 comes from</h2>

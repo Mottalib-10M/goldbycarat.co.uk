@@ -15,10 +15,10 @@ export default definePage({
   ],
   body: (h) => {
     const ids = ['britannia-1oz', 'britannia-half', 'britannia-quarter', 'britannia-tenth'];
-    const rows = ids.map((id) => { const c = coinById(id); const fg = coinFineGrams(c); return [c.name, h.num(fg, 3) + ' g', h.gbp(h.at(fg, 1000))]; });
+    const rows = ids.map((id) => { const c = coinById(id); const fg = coinFineGrams(c); return [c.name, h.num(fg, 3) + ' g', h.live(h.at(fg, 1000), 'XAU')]; });
     return `
 <h2>Britannia coins and their gold</h2>
-${h.table(['Coin', 'Fine gold', 'Metal value'], rows, `Example worked out at the gold price of ${h.when}; contents from the Royal Mint 2026 specifications.`)}
+${h.table(['Coin', 'Fine gold', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}); contents from the Royal Mint 2026 specifications.`)}
 
 <h2>The specification</h2>
 <p>The Royal Mint gives the ${h.src('rmBritannia1', '1 oz Britannia')} as one troy ounce of 999.9 fine gold, and publishes the ${h.src('rmBritanniaHalf', 'half')}, ${h.src('rmBritanniaQuarter', 'quarter')} and ${h.src('rmBritanniaTenth', 'tenth')} ounce coins at the same fineness. The calculator values each from its stated content, so the figures do not depend on your scales.</p>

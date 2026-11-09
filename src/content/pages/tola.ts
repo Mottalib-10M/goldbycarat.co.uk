@@ -14,10 +14,10 @@ export default definePage({
   ],
   body: (h) => {
     const t = 180 * 0.06479891;
-    const rows = [1, 2, 5, 10, 20].map((n) => [`${n} tola`, h.num(n * t, 2) + ' g', h.gbp(h.at(n * t, 916.6)), h.gbp(h.at(n * t, 875)), h.gbp(h.at(n * t, 999))]);
+    const rows = [1, 2, 5, 10, 20].map((n) => [`${n} tola`, h.num(n * t, 2) + ' g', h.live(h.at(n * t, 916.6), 'XAU'), h.live(h.at(n * t, 875), 'XAU'), h.live(h.at(n * t, 999), 'XAU')]);
     return `
 <h2>Tolas in pounds</h2>
-${h.table(['Tolas', 'Grams', '22ct', '21ct', '24ct'], rows, `Tola of 180 grains; spot price recorded on ${h.when}.`)}
+${h.table(['Tolas', 'Grams', '22ct', '21ct', '24ct'], rows, `Tola of 180 grains; worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Where the tola weight comes from</h2>
 <p>The grain is a legal unit in the UK: ${h.src('ukWeights', 'UK weights law')} defines it as 1/7,000 of a pound, {grain} g. The tola of 180 grains is a South Asian trade convention built on it, and it is the figure most bullion and jewellery dealers use. We found no British text that defines the tola, so we do not present it as official. If a jeweller works with a different tola, change the weight in the calculator and every figure follows.</p>

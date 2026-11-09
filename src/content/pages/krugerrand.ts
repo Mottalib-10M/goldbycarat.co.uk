@@ -14,7 +14,7 @@ export default definePage({
   ],
   body: (h) => `
 <h2>Same gold, different tax</h2>
-${h.table(['Coin', 'Fine gold', 'Fineness', 'Metal value', 'Capital Gains Tax'], [['Krugerrand 1 oz', '1 oz', '916.7', h.gbp(h.at(31.1034768, 1000)), 'Chargeable, chattel rule'], ['Maple Leaf 1 oz', '1 oz', '999', h.gbp(h.at(31.1034768, 1000)), 'Chargeable, chattel rule'], ['Britannia 1 oz', '1 oz', '999.9', h.gbp(h.at(31.1034768, 1000)), 'Outside CGT (sterling)']], `Example worked out at the gold price of ${h.when}.`)}
+${h.table(['Coin', 'Fine gold', 'Fineness', 'Metal value', 'Capital Gains Tax'], [['Krugerrand 1 oz', '1 oz', '916.7', h.live(h.at(31.1034768, 1000), 'XAU'), 'Chargeable, chattel rule'], ['Maple Leaf 1 oz', '1 oz', '999', h.live(h.at(31.1034768, 1000), 'XAU'), 'Chargeable, chattel rule'], ['Britannia 1 oz', '1 oz', '999.9', h.live(h.at(31.1034768, 1000), 'XAU'), 'Outside CGT (sterling)']], `Worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Specifications</h2>
 <p>The Royal Mint sells both coins and gives their specifications: the ${h.src('rmKrugerrand', 'Krugerrand')} at one ounce of fine gold, 916.7 fine, and the ${h.src('rmMaple', 'Canadian Maple Leaf')} at one ounce, 999 fine. The calculator values each from that content, so worn coins or ones with damaged edges may fetch less from a dealer than the figure shown.</p>

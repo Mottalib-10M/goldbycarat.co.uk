@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Are half sovereigns VAT-free?', a: 'Yes, as investment gold. They are legal tender, at least {vat.coin} fine, minted after {vat.minted} and normally sold for no more than {vat.premium} of their gold value, which are the conditions in HMRC VAT Notice 701/21. A heavily marked-up proof or presentation set could fall outside that last condition.' },
   ],
   body: (h) => {
-    const rows = [1, 2, 5, 10, 20].map((n) => [`${n} × half sovereign`, h.num(n * 3.99402 * 0.91666, 3) + ' g', h.gbp(h.at(n * 3.99402, 916.66))]);
+    const rows = [1, 2, 5, 10, 20].map((n) => [`${n} × half sovereign`, h.num(n * 3.99402 * 0.91666, 3) + ' g', h.live(h.at(n * 3.99402, 916.66), 'XAU')]);
     return `
 <h2>Half sovereigns by the number</h2>
-${h.table(['Coins', 'Fine gold', 'Melt value'], rows, `Example worked out at the gold price of ${h.when}.`)}
+${h.table(['Coins', 'Fine gold', 'Melt value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Legal weight and fineness</h2>
 <p>The ${h.src('coinageAct', 'Coinage Act 1971, Schedule 1')} lists the half sovereign at a standard weight of {half.g} and eleven twelfths fine. That gives {half.fine} of fine gold, which is how much gold the coin contains if it is at full weight. Older halves that have circulated may be slightly lighter; dealers trading bullion halves rarely adjust for that unless the wear is obvious.</p>

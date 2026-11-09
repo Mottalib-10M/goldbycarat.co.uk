@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Is the price per ounce on this page in pounds or dollars?', a: 'In pounds. gold-api.com publishes the spot price in several currencies and this site asks for sterling directly, so there is no exchange rate to apply. The figure moves with both the dollar gold price and the pound, which is why it can change even on a day the dollar price is flat.' },
   ],
   body: (h) => {
-    const rows = [0.1, 0.25, 0.5, 1, 2, 5, 10, 32.1507].map((oz) => [oz === 32.1507 ? '1 kg (32.15 oz)' : `${oz} oz`, h.num(oz * 31.1034768, 2) + ' g', h.gbp(h.at(oz * 31.1034768, 1000)), h.gbp(h.at(oz * 31.1034768, 916.6))]);
+    const rows = [0.1, 0.25, 0.5, 1, 2, 5, 10, 32.1507].map((oz) => [oz === 32.1507 ? '1 kg (32.15 oz)' : `${oz} oz`, h.num(oz * 31.1034768, 2) + ' g', h.live(h.at(oz * 31.1034768, 1000), 'XAU'), h.live(h.at(oz * 31.1034768, 916.6), 'XAU')]);
     return `
 <h2>Ounces of gold in pounds</h2>
-${h.table(['Troy ounces', 'Grams', 'Pure gold', '22ct'], rows, `Example worked out at the gold price of ${h.when}. Pure gold shown at 1,000 thousandths, the basis of the spot price.`)}
+${h.table(['Troy ounces', 'Grams', 'Pure gold', '22ct'], rows, `Worked out at the same gold price as the calculator above (${h.when}). Pure gold shown at 1,000 thousandths, the basis of the spot price.`)}
 
 <h2>The troy ounce in law</h2>
 <p>${h.src('ukWeights', 'UK weights law')} defines the troy ounce as 0.0311034768 kg and the grain as 1/7,000 of a pound of 0.45359237 kg, which makes {grain} g. A troy ounce is 480 grains. These figures are exact by definition, so any conversion on this site is exact too; the only rounding is in how many decimals we show.</p>

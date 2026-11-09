@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Is 14ct gold worth more than 9ct?', a: 'Per gram, yes: it contains {f.14} thousandths of gold against {f.9}, so it is worth about 1.56 times as much as 9ct of the same weight. It is worth about 78% of 18ct. These ratios hold at any spot price, because only the proportion of gold changes.' },
   ],
   body: (h) => {
-    const rows = [1, 2, 5, 10, 20, 50].map((g) => [`${g} g`, h.gbp(h.at(g, 585)), h.gbp(h.at(g, 583.3)), h.gbp(h.at(g, 585) - h.at(g, 583.3))]);
+    const rows = [1, 2, 5, 10, 20, 50].map((g) => [`${g} g`, h.live(h.at(g, 585), 'XAU'), h.live(h.at(g, 583.3), 'XAU'), h.live(h.at(g, 585) - h.at(g, 583.3), 'XAU')]);
     return `
 <h2>14ct value by weight, and the 585 question</h2>
-${h.table(['Weight', 'At 585 (UK standard)', 'At 583.3 (14/24)', 'Difference'], rows, `Example worked out at the gold price of ${h.when}.`)}
+${h.table(['Weight', 'At 585 (UK standard)', 'At 583.3 (14/24)', 'Difference'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>The difference between the two columns is small, a few pence on a ring, and that is the point: the legal standard is a floor, set just above the arithmetic, so a hallmarked 585 article never contains less gold than 14 carats. ${h.src('hallmarkSch2', 'UK hallmarking law')} lists 585 among the standards for gold, and ${h.src('hallmarkSch1', 'the hallmarking law')} maps 14 carat to it.</p>
 
 <h2>Where 14ct turns up in Britain</h2>

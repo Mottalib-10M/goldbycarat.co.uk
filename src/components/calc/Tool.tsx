@@ -3,7 +3,7 @@
  * lit le cours par useSpot() : premier rendu = relevé du build (HTML servi), puis cours du moment
  * (RECETTE §17.5). L'état ne s'écrit dans l'adresse qu'après une action (url-state.ts, §18.1).
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NumberField from '../ui/NumberField';
 import SelectField from '../ui/SelectField';
 import Toggle from '../ui/Toggle';
@@ -30,8 +30,12 @@ const HALLMARK_PATH = '/en/uk-hallmarks-guide/';
 const INHERITED_PATH = '/en/selling-inherited-gold/';
 const SCRAP_PATH = '/en/scrap-gold-price/';
 const COIN_PATH = '/en/sovereign-gold-value/';
-// Test naïf, 4e tour : « 69.9 %, c'est bien ou pas ? ». Aucune fourchette sourcée n'existe : on dit quoi faire du chiffre.
-const NO_FAIR_RATE = 'Use this percentage to compare: ask one or two other buyers to quote for the same gold today. The one that pays the highest percentage is the better offer. No law sets a fair rate.';
+// Test naïf, 4e tour : « 69.9 %, c'est bien ou pas ? ». 2026-11-09 (trois testeurs) : toujours sans repère.
+// Aucune source officielle ne publie ce que paient les acheteurs (aucune loi, aucun organisme) : on le dit là
+// où le lecteur le cherche, et on donne deux repères calculés, pas inventés : 100 % = tout l'or, et ce que vaut
+// en livres chaque tranche de 10 points sur SON or (pointsWorth).
+const NO_FAIR_RATE = 'Is it a good offer? No law or official body publishes what buyers pay, so nobody can tell you a normal percentage. Your yardstick is other quotes: ask one or two other buyers about the same gold today, and if one pays clearly less than the others, walk away. 100% would be all the gold is worth.';
+const pointsWorth = (value: number) => (value > 0 ? `Every 10 percentage points on this gold is ${gbp(value / 10)}.` : '');
 const KEPT_NOTE = 'What the buyer keeps pays for melting and refining, staff and the risk that the price falls: it is not all profit.';
 const OVER_100 = 'More than the gold is worth: check the weight and carat the buyer wrote down, or ask whether it is paying for the piece as jewellery.';
 
@@ -82,7 +86,7 @@ function Board({ mini, title, idp = 'b', ct = 9, grams: g0 = 10 }: ToolArgs) {
       fields={<>
         {example && <ExampleNote>Example: {formatDecimal(g, 2)} g of {k}ct. Type your own weight.</ExampleNote>}
         <div className="grid grid-cols-2 gap-x-4"><CaratSelect id={`${idp}-ct`} value={k} onChange={typed(setK)} /><NumberField id={`${idp}-g`} label="Weight" value={g} onChange={typed(setG)} unit="g" decimals={2} max={100000} /></div>
-        <p className="-mt-2 text-xs text-navy-600">Not sure of the carat? Look for a number inside the ring or on the clasp: 375 is 9ct, 585 is 14ct, 750 is 18ct, 916 is 22ct. <a href={HALLMARK_PATH} className="underline hover:text-navy-900">No number?</a></p>
+        <p className="-mt-2 text-xs text-navy-600">Not sure of the carat? Look for a number inside the ring or on the clasp: 375 is 9ct, 585 is 14ct, 750 is 18ct, 916 is 22ct. <a href={HALLMARK_PATH} className="underline hover:text-navy-900">No number?</a> Weight: kitchen scales are fine; whole grams still give a fair idea.</p>
         <NumberField id={`${idp}-o`} label="Offer you were given (optional)" value={offer} onChange={typed(setOffer)} unit="£" decimals={2} max={10000000} />
         <SpotLine spot={spot} metals={['XAU']} />
       </>}
@@ -90,7 +94,7 @@ function Board({ mini, title, idp = 'b', ct = 9, grams: g0 = 10 }: ToolArgs) {
         <Big label={`${example ? 'Example: ' : ''}${formatDecimal(g, 2)} g of ${k}ct gold is worth`} value={gbp(value)} sub="This is the value of the gold itself. A buyer pays less, because it has to melt and refine it." />
         {offer > 0 && <>
           <p className="mt-3 text-base font-semibold text-navy-900">Your offer of {gbp(offer)} pays {pct(s.share)} of this gold value{s.gap > 0 ? <>; the buyer keeps {gbp(s.gap)}</> : null}.</p>
-          <p className={`mt-1 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : NO_FAIR_RATE}</p>
+          <p className={`mt-1 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : <>{NO_FAIR_RATE} {pointsWorth(value)}</>}</p>
         </>}
         <ul className="mt-3 space-y-1.5 text-sm">
           <li><a href={`${OFFER_PATH}?ct=${k}&g=${g}${offer > 0 ? `&o=${offer}` : ''}`} className="font-medium text-accent-700 underline hover:text-navy-900">{offer > 0 ? 'Got other quotes? Compare them, and see what to check before you say yes →' : 'Several quotes to compare? Use the offer checker →'}</a></li>
@@ -121,7 +125,7 @@ function CaratTool({ mini, title, idp = 'c', ct = 9, grams: g0 = 10 }: ToolArgs)
     <Frame mini={mini} title={title}
       fields={<>
         {example && <ExampleNote>Example: {formatDecimal(g, 2)} g. Type the weight of your own {ct}ct piece.</ExampleNote>}
-        <NumberField id={`${idp}-g`} label={`Weight of your ${ct}ct gold`} value={g} onChange={typed(setG)} unit="g" decimals={2} max={100000} help="Weigh it on kitchen scales to 0.1 g; stones and springs make it heavier than the gold inside" />
+        <NumberField id={`${idp}-g`} label={`Weight of your ${ct}ct gold`} value={g} onChange={typed(setG)} unit="g" decimals={2} max={100000} help="Weigh it on kitchen scales. Scales that show 0.1 g are best; whole grams still give a fair idea. Stones and springs make it heavier than the gold inside" />
         <NumberField id={`${idp}-o`} label="Offer you were given (optional)" value={offer} onChange={typed(setOffer)} unit="£" decimals={2} max={10000000} help="Type the total a buyer offered to see what share of the gold it pays; leave at 0 if you have none" />
         <SpotLine spot={spot} metals={['XAU']} />
       </>}
@@ -133,7 +137,7 @@ function CaratTool({ mini, title, idp = 'c', ct = 9, grams: g0 = 10 }: ToolArgs)
           {offer > 0 && <Row label="The offer pays" value={`${pct(s.share)} of the gold value`} strong />}
           {offer > 0 && <Row label={s.gap >= 0 ? 'Difference kept by the buyer' : 'Above the gold value'} value={gbp(Math.abs(s.gap))} />}
         </Table>
-        {offer > 0 && <p className={`mt-2 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : NO_FAIR_RATE}</p>}
+        {offer > 0 && <p className={`mt-2 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : <>{NO_FAIR_RATE} {pointsWorth(value)}</>}</p>}
         {offer > 0 && <BeforeYes />}
       </>} />
   );
@@ -150,6 +154,8 @@ function Offer({ mini, title, idp = 'o', ct = 9, grams: g0 = 10, offer: given }:
   const [example, setExample] = useState(given === undefined);
   useEffect(() => { const u = readParams(location.search); const kk = num(u, 'ct', ct), gg = num(u, 'g', g0); setK(kk); setG(gg); setOffer(num(u, 'o', gg === g0 && kk === ct ? o0 : exampleOffer(gg, kk, 0.7))); if (u.has('o')) setExample(false); }, []);
   useEffect(() => { updateURL({ ct: k, g, o: offer }); }, [k, g, offer]);
+  // Le comparateur de la même page reprend carat, poids et offre (test naïf du 2026-11-09 : « pourquoi retaper ? »).
+  useEffect(() => { if (!mini) window.dispatchEvent(new CustomEvent<OffreTapee>('gbc:offre', { detail: { ct: k, g, offer, example } })); }, [k, g, offer, example]);
   const typeOffer = (v: number) => { setOffer(v); setExample(false); };
   const spot = useSpot(['XAU']);
   const value = metalValue(g, finenessOfCarat(k), spot.XAU.gbpPerOz);
@@ -159,13 +165,13 @@ function Offer({ mini, title, idp = 'o', ct = 9, grams: g0 = 10, offer: given }:
     <Frame mini={mini} title={title}
       fields={<>
         <div className="grid grid-cols-2 gap-x-4"><CaratSelect id={`${idp}-ct`} value={k} onChange={setK} /><NumberField id={`${idp}-g`} label="Weight" value={g} onChange={setG} unit="g" decimals={2} max={100000} /></div>
-        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example figures: type your own weight and offer.</p>}
+        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example: {formatDecimal(g, 2)} g of {k}ct and a made-up offer of {gbp(offer)}. Type your own weight and the offer you were given.</p>}
         <NumberField id={`${idp}-o`} label="Total offered" value={offer} onChange={typeOffer} unit="£" decimals={2} max={10000000} help={example ? `${formatNumber(g, 0)} g and ${gbp(offer)} are only an example: replace them with the weight and the cash figure the buyer quoted` : 'The cash figure the buyer quoted for the whole lot'} />
         <SpotLine spot={spot} metals={['XAU']} />
       </>}
       result={<>
         <Big label={example ? 'Example: this offer pays' : 'This offer pays'} value={pct(s.share)} sub={<>of the {gbp(value)} the gold is worth in {example ? 'this example of' : 'your'} {formatDecimal(g, 2)} g of {k}ct</>} />
-        <p className={`mt-2 text-sm font-medium ${s.share > 1 ? 'text-amber-800' : 'text-navy-900'}`}>{s.share > 1 ? OVER_100 : NO_FAIR_RATE}</p>
+        <p className={`mt-2 text-sm font-medium ${s.share > 1 ? 'text-amber-800' : 'text-navy-900'}`}>{s.share > 1 ? OVER_100 : <>{NO_FAIR_RATE} {pointsWorth(value)}</>}</p>
         <p className="mt-1 text-sm"><a href={`${OFFER_PATH}#compare`} className="font-medium text-accent-700 underline hover:text-navy-900">Got two or three quotes? Compare them side by side →</a></p>
         <Table caption="Offer compared with the metal value">
           <Row label="Value of the gold" value={gbp(value)} bar={scale > 0 ? value / scale : 0} />
@@ -178,6 +184,8 @@ function Offer({ mini, title, idp = 'o', ct = 9, grams: g0 = 10, offer: given }:
       </>} />
   );
 }
+
+interface OffreTapee { ct: number; g: number; offer: number; example: boolean }
 
 /** Test naïf, 3e tour : « est-ce que je me fais avoir ? » restait sans réponse visible. Aucune fourchette
  *  sourcée n'existe (FAQ : aucune loi ni organisme n'en fixe) : on donne la marche à suivre, sans chiffre. */
@@ -213,7 +221,7 @@ function Scrap({ mini, title, idp = 's' }: ToolArgs) {
   return (
     <Frame mini={mini} title={title}
       fields={<>
-        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example figures: type the weights of your own pieces.</p>}
+        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example: a lot of 20 g of 9ct and 5 g of 18ct. Type the weights of your own pieces.</p>}
         <div className="grid grid-cols-2 gap-x-4">{[9, 14, 18, 22].map((ct) => <NumberField key={ct} id={`${idp}-${ct}`} label={`Grams of ${ct}ct`} value={q[ct]} onChange={set(ct)} unit="g" decimals={2} max={100000} />)}</div>
         <NumberField id={`${idp}-o`} label="Offer you were given for the whole lot (optional)" value={offer} onChange={(v) => { setExample(false); setOffer(v); }} unit="£" decimals={2} max={10000000} help="Got one price for everything? Type it to see what share of the gold it pays" />
         <SpotLine spot={spot} metals={['XAU']} />
@@ -222,9 +230,9 @@ function Scrap({ mini, title, idp = 's' }: ToolArgs) {
         <Big label={example ? 'Example: value of the gold in the whole lot' : 'Value of the gold in the whole lot'} value={gbp(lot.value)} sub={`${grams(lot.fineGrams)} of pure gold across ${formatNumber(q[9] + q[14] + q[18] + q[22], 2)} g of items`} />
         {offer > 0 && <>
           <p className="mt-3 text-base font-semibold text-navy-900">The offer of {gbp(offer)} pays {pct(s.share)} of the gold in the lot{s.gap > 0 ? <>; the buyer keeps {gbp(s.gap)}</> : null}.</p>
-          <p className={`mt-1 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : NO_FAIR_RATE}</p>
+          <p className={`mt-1 text-sm ${s.share > 1 ? 'text-amber-800' : 'text-navy-700'}`}>{s.share > 1 ? OVER_100 : <>{NO_FAIR_RATE} {pointsWorth(lot.value)}</>}</p>
         </>}
-        <p className="mt-3 text-sm text-navy-700">What a buyer would pay at different percentages of that value (no rate is standard):</p>
+        <p className="mt-3 text-sm text-navy-700">What a buyer would pay at different percentages of that value. No law or official body publishes what buyers pay, so these are not typical rates: compare your quotes with them.</p>
         <Table caption="Payout at different shares of the metal">
           {[60, 70, 80, 90].map((p) => <Row key={p} label={`Paid at ${p}% of the gold value`} value={gbp(lot.value * p / 100)} />)}
         </Table>
@@ -240,7 +248,21 @@ function Compare({ mini, title, idp = 'cp', ct = 9, grams: g0 = 10 }: ToolArgs) 
   const ex = (gg: number, kk: number): [number, number, number] => [exampleOffer(gg, kk, 0.65), exampleOffer(gg, kk, 0.75), 0];
   const [o, setO] = useState<[number, number, number]>(ex(g0, ct));
   const [example, setExample] = useState(true);
+  const [fromChecker, setFromChecker] = useState(false);
+  const exRef = useRef(true);
+  useEffect(() => { exRef.current = example; }, [example]);
   useEffect(() => { const u = readParams(location.search); const kk = num(u, 'ct', ct), gg = num(u, 'g', g0); const d = ex(gg, kk); setK(kk); setG(gg); setO([num(u, 'x', d[0]), num(u, 'y', d[1]), num(u, 'z', 0)]); if (u.has('x') || u.has('y')) setExample(false); }, []);
+  // Carat, poids et offre tapés dans le vérificateur au-dessus : repris ici, l'offre devient « Offer A ».
+  useEffect(() => {
+    const on = (e: Event) => {
+      const d = (e as CustomEvent<OffreTapee>).detail;
+      setK(d.ct); setG(d.g);
+      if (!d.example && d.offer > 0) { setO((x) => [d.offer, x[1], x[2]]); setFromChecker(true); setExample(false); }
+      else if (exRef.current) setO(ex(d.g, d.ct));
+    };
+    window.addEventListener('gbc:offre', on);
+    return () => window.removeEventListener('gbc:offre', on);
+  }, []);
   useEffect(() => { updateURL({ ct: k, g, x: o[0], y: o[1], z: o[2] }); }, [k, g, o]);
   const spot = useSpot(['XAU']);
   const value = metalValue(g, finenessOfCarat(k), spot.XAU.gbpPerOz);
@@ -252,7 +274,8 @@ function Compare({ mini, title, idp = 'cp', ct = 9, grams: g0 = 10 }: ToolArgs) 
     <Frame mini={mini} title={title}
       fields={<>
         <div className="grid grid-cols-2 gap-x-4"><CaratSelect id={`${idp}-ct`} value={k} onChange={setK} /><NumberField id={`${idp}-g`} label="Weight" value={g} onChange={setG} unit="g" decimals={2} max={100000} /></div>
-        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example figures: type the quotes you were given.</p>}
+        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example: {formatDecimal(g, 2)} g of {k}ct and two made-up quotes. Type the quotes you were given.</p>}
+        {fromChecker && <p className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Carat, weight and Offer A come from the checker above. Add your other quotes.</p>}
         <div className="grid grid-cols-2 gap-x-4"><NumberField id={`${idp}-x`} label="Offer A (first buyer)" value={o[0]} onChange={setI(0)} unit="£" decimals={2} max={10000000} /><NumberField id={`${idp}-y`} label="Offer B (second buyer)" value={o[1]} onChange={setI(1)} unit="£" decimals={2} max={10000000} /></div>
         <NumberField id={`${idp}-z`} label="Offer C (optional)" value={o[2]} onChange={setI(2)} unit="£" decimals={2} max={10000000} help="Leave at 0 if you only have two quotes" />
         <SpotLine spot={spot} metals={['XAU']} />
@@ -351,7 +374,7 @@ function CoinTool({ mini, title, idp = 'cn', coin = 'sovereign' }: ToolArgs) {
         {example && <ExampleNote>Example: {n} × {coinById(id).name}. Choose your coin and how many you have.</ExampleNote>}
         <SelectField id={`${idp}-c`} label="Coin" value={id} onChange={typed(setId)} options={P.coins.map((x) => ({ value: x.id, label: x.name }))} />
         <div className="grid grid-cols-2 gap-x-4"><NumberField id={`${idp}-n`} label="How many" value={n} onChange={typed(setN)} max={10000} />
-          <NumberField id={`${idp}-p`} label="Price (optional)" value={price} onChange={typed(setPrice)} unit="£" decimals={2} max={10000000} /></div>
+          <NumberField id={`${idp}-p`} label="Price asked or offered (optional)" value={price} onChange={typed(setPrice)} unit="£" decimals={2} max={10000000} /></div>
         <p className="-mt-2 text-xs text-navy-600">Price: what a dealer asks, or a buyer offers, for all these coins. It shows that price as a share of the gold inside. Leave at 0 if you have no price.</p>
         <SpotLine spot={spot} metals={metals} />
       </>}
@@ -451,11 +474,11 @@ function Cgt({ mini, title, idp = 'cg', kind = 'chattel' }: ToolArgs) {
       fields={<>
         <p className="text-sm font-medium text-navy-900">Sold each piece, or set, for {lim} or less? Then there is no tax to pay and you can stop here.</p>
         <SelectField id={`${idp}-k`} label="What you are selling" value={k} onChange={(v) => setK(v as CgtKind)} options={[{ value: 'chattel', label: 'Jewellery, bar or scrap' }, { value: 'uk-coin', label: 'Sovereigns or Britannias' }, { value: 'foreign-coin', label: 'Krugerrands, other foreign coins' }]} help="One item, or a set sold together" />
-        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example figures: type your own sale price and cost.</p>}
+        {example && <p data-exemple className="rounded bg-accent-50 px-2 py-1 text-sm font-medium text-navy-900">Example: jewellery bought for £1,000 and sold for £3,000. Type your own sale price and cost.</p>}
         <div className="grid grid-cols-2 gap-x-4"><NumberField id={`${idp}-s`} label="Sale price" value={proceeds} onChange={typed(setProceeds)} unit="£" max={100000000} />
-          <NumberField id={`${idp}-c`} label="What you paid for it" value={cost} onChange={typed(setCost)} unit="£" max={100000000} help="Inherited? Type what it was worth when the person died: the value given for probate, if there was one" /></div>
+          <NumberField id={`${idp}-c`} label="What you paid for it" value={cost} onChange={typed(setCost)} unit="£" max={100000000} help="Inherited? Type what it was worth when the person died: the value given for probate (the official valuation of what the person left), if there was one" /></div>
         <NumberField id={`${idp}-x`} label="Selling costs" value={costs} onChange={typed(setCosts)} unit="£" max={10000000} help="Fees paid to sell it, such as postage or a valuation; 0 if none" />
-        {r.taxable > 0 && <NumberField id={`${idp}-i`} label="Your income this year, after the tax-free part" value={income} onChange={typed(setIncome)} unit="£" max={100000000} help="Asked only because there is tax to pay: your pay or pension minus the part you pay no income tax on. It decides the rate, 18% or 24%" />}
+        {r.taxable > 0 && <NumberField id={`${idp}-i`} label="Your income this tax year (6 April to 5 April), after the tax-free part" value={income} onChange={typed(setIncome)} unit="£" max={100000000} help="Asked only because there is tax to pay: your pay or pension minus the part you pay no income tax on. It decides the rate, 18% or 24%" />}
       </>}
       result={<>
         <Big label={`${example ? 'Example: ' : ''}Capital Gains Tax, ${P.taxYear}`} value={gbp(r.tax)} sub={ruleText} />
@@ -531,7 +554,7 @@ function Hallmark({ mini, title, idp = 'hm' }: ToolArgs) {
         {example && <ExampleNote>Example: a {formatDecimal(g, 2)} g piece stamped {Math.floor(ff)}. Choose the number on your own piece.</ExampleNote>}
         <div className="grid grid-cols-2 gap-x-4"><SelectField id={`${idp}-m`} label="Metal" value={mt} onChange={(v) => { typed(setMt)(v); setF((v === 'gold' ? P.goldStandards : v === 'silver' ? P.silver : v === 'platinum' ? P.platinum : P.palladium)[0]); }} options={[{ value: 'gold', label: 'Gold' }, { value: 'silver', label: 'Silver' }, { value: 'platinum', label: 'Platinum' }, { value: 'palladium', label: 'Palladium' }]} />
           <SelectField id={`${idp}-f`} label="Number stamped on it" value={String(ff)} onChange={(v) => typed(setF)(Number(v))} options={list.map((s) => ({ value: String(s), label: String(Math.floor(s)) }))} /></div>
-        <NumberField id={`${idp}-g`} label="Weight of the piece" value={g} onChange={typed(setG)} unit="g" decimals={2} max={100000} help="Look inside a ring or on the clasp of a chain for the number" />
+        <NumberField id={`${idp}-g`} label="Weight of the piece" value={g} onChange={typed(setG)} unit="g" decimals={2} max={100000} help="Look inside a ring or on the clasp of a chain for the number. Stamped 9ct, 18 or 18K instead? Choose 375 for 9ct, 585 for 14ct, 750 for 18ct, 916 for 22ct" />
         <SpotLine spot={spot} metals={[sym]} />
       </>}
       result={<>
@@ -539,8 +562,9 @@ function Hallmark({ mini, title, idp = 'hm' }: ToolArgs) {
         <Table caption="What the mark tells you">
           <Row label="Pure metal in the piece" value={grams(g * ff / 1000, 3)} />
           <Row label="Value of 1 g of the piece" value={gbp2(gramPrice(ff, spot[sym].gbpPerOz))} />
-          <Row label="Must a piece this heavy carry a hallmark?" value={g < limit ? `No: ${mt} under ${formatDecimal(limit, 2)} g need not` : `Yes: ${mt} of ${formatDecimal(limit, 2)} g or more must`} />
+          <Row label="Must a piece this heavy carry a hallmark?" value={g < limit ? `No: ${mt} under ${formatDecimal(limit, 2)} g need not` : `Yes, when a business sells it as ${mt}: ${formatDecimal(limit, 2)} g or more`} />
         </Table>
+        {g >= limit && <p className="mt-2 text-sm text-navy-700">Old, foreign or handmade pieces often have no British hallmark: that does not make them fake, and you may still sell them. A buyer will test the metal.</p>}
       </>} />
   );
 }

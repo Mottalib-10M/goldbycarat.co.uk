@@ -17,8 +17,14 @@ export interface Helpers {
   pct: (x: number, d?: number) => string;
   /** Valeur au relevé du build (spot-snapshot.json) : grammes × millièmes. */
   at: (grams: number, fineness: number, metal?: 'XAU' | 'XAG' | 'XPT' | 'XPD') => number;
-  /** Heure du relevé du build, en toutes lettres (heure de Londres). */
+  /** Montant qui dépend du cours d'un métal, recalculé au cours du calculateur dans le navigateur (live.ts).
+   *  f = 'gbp' (défaut), 'gbp2' (pence toujours) ou 'pct' (part d'une offre fixe : inverse du cours). */
+  live: (n: number, metal?: 'XAU' | 'XAG' | 'XPT' | 'XPD', f?: 'gbp' | 'gbp2' | 'pct') => string;
+  /** Heure du cours de l'or, en toutes lettres (heure de Londres) : relevé du build, puis cours du calculateur. */
   when: string;
+  whenOf: (metal: 'XAU' | 'XAG' | 'XPT' | 'XPD') => string;
+  /** Heure du relevé du build, fixe (pour un chiffre qui ne suit pas le cours du moment). */
+  recorded: string;
   P: Params;
 }
 

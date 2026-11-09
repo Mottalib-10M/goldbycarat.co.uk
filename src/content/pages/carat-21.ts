@@ -1,6 +1,6 @@
 import { definePage } from '../../lib/page-types';
 export default definePage({
-  id: 'carat-21', group: 'gold', order: 15, tool: 'carat', toolProps: { ct: 21, grams: 10 }, kind: 'outil',
+  id: 'carat-21', group: 'gold', order: 12.5, tool: 'carat', toolProps: { ct: 21, grams: 10 }, kind: 'outil',
   related: ['carat-22', 'carat-18', 'hallmarks', 'scrap'], sources: ['hallmarkSch1', 'hallmarkSch2'],
   slug: '21ct-gold-price', nav: '21ct gold price', card: 'Gulf and Middle Eastern gold: value per gram at 875, a guide figure',
   title: '21ct Gold Price per Gram UK: Value of Gulf Gold in £',
@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Is gold bought in Dubai really 21ct?', a: 'Retail gold in the Gulf is sold under local rules and stamped by the shop or a local authority. Those marks are not checked by a British assay office. Most pieces are what they say, but a test is the only proof. A buyer’s test that comes in below 875 should come with the figure it found.' },
   ],
   body: (h) => {
-    const rows = [5, 10, 20, 50, 100].map((g) => [`${g} g`, h.gbp(h.at(g, 875)), h.gbp(h.at(g, 916.6)), h.gbp(h.at(g, 750))]);
+    const rows = [5, 10, 20, 50, 100].map((g) => [`${g} g`, h.live(h.at(g, 875), 'XAU'), h.live(h.at(g, 916.6), 'XAU'), h.live(h.at(g, 750), 'XAU')]);
     return `
 <h2>21ct value by weight, next to its neighbours</h2>
-${h.table(['Weight', '21ct (875)', '22ct (916.6)', '18ct (750)'], rows, `Example worked out at the gold price of ${h.when}. 21ct is shown at a straight 21/24 as a guide.`)}
+${h.table(['Weight', '21ct (875)', '22ct (916.6)', '18ct (750)'], rows, `Worked out at the same gold price as the calculator above (${h.when}). 21ct is shown at a straight 21/24 as a guide.`)}
 
 <h2>Why 21ct has no British standard</h2>
 <p>${h.src('hallmarkSch2', 'UK hallmarking law')} lists six standards for gold: 375, 585, 750, 916.6, 990 and 999. ${h.src('hallmarkSch1', 'The hallmarking law')} gives the carat equivalents for 9, 14, 18 and 22. There is no 21. An article must reach a standard to be hallmarked at it, and an article described for sale in the UK as gold must be hallmarked unless it is exempt. So a trader selling 21ct here would have to have it marked 750 and give away the difference. That is why 21ct is rare in British shops and common in British homes.</p>

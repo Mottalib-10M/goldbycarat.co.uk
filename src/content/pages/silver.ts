@@ -13,10 +13,10 @@ export default definePage({
     { q: 'What weight of silver needs a hallmark?', a: 'Under UK hallmarking law, silver articles under {hm.silver} are exempt. Above that weight, an item sold in the UK as silver must carry a hallmark from an assay office. Many small items such as rings and earrings fall below the limit and carry only a maker’s stamp, or nothing.' },
   ],
   body: (h) => {
-    const rows = h.P.silver.map((f) => [f === 925 ? '925 sterling' : f === 958.4 ? '958.4 Britannia' : String(f), h.gbp2(h.at(1, f, 'XAG')), h.gbp2(h.at(31.1034768, f, 'XAG')), h.gbp(h.at(1000, f, 'XAG'))]);
+    const rows = h.P.silver.map((f) => [f === 925 ? '925 sterling' : f === 958.4 ? '958.4 Britannia' : String(f), h.live(h.at(1, f, 'XAG'), 'XAG', 'gbp2'), h.live(h.at(31.1034768, f, 'XAG'), 'XAG', 'gbp2'), h.live(h.at(1000, f, 'XAG'), 'XAG')]);
     return `
 <h2>Silver price per gram and per ounce, by standard</h2>
-${h.table(['Standard', 'Per gram', 'Per troy oz', 'Per kg'], rows, `Example worked out at the silver price of ${h.when}.`)}
+${h.table(['Standard', 'Per gram', 'Per troy oz', 'Per kg'], rows, `Worked out at the same silver price as the calculator above (${h.whenOf('XAG')}).`)}
 
 <h2>The four silver standards</h2>
 <p>${h.src('hallmarkSch2', 'UK hallmarking law')} sets four standards of fineness for silver: 800, 925, 958.4 and 999. Sterling, 925, is by far the most common on British silver. Britannia silver, 958.4, is a richer standard used on some antique and modern pieces and is not the same as the Britannia coin. 999 is used for bullion and some modern jewellery. 800 is the lowest of the four.</p>

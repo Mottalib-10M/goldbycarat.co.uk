@@ -3,7 +3,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 import SelectField from '../ui/SelectField';
 import { P, SNAPSHOT, type Metal } from '../../lib/engine/params';
 import { refreshSpot, type Spot } from '../../lib/live';
-import { gbp, stamp, clock } from '../../lib/money';
+import { gbp, gbp2, stamp } from '../../lib/money';
+import { finePerGram } from '../../lib/engine/metal';
 import { formatNumber } from '../../lib/format';
 
 export const METAL_NAME: Record<Metal, string> = { XAU: 'Gold', XAG: 'Silver', XPT: 'Platinum', XPD: 'Palladium' };
@@ -16,6 +17,9 @@ export const METAL_NAME: Record<Metal, string> = { XAU: 'Gold', XAG: 'Silver', X
  *  Elle dit maintenant une chose : le prix et l'heure à laquelle il a été vérifié ; la source et le bouton
  *  « Check for a newer price » passent dans un repli « Where this price comes from ». */
 export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
+  // 2026-11-09 (trois testeurs) : « 08:49, 08:46, £3,063, £3,064 : lequel croire ? ». Le texte et les tableaux
+  // suivent maintenant le même cours que le calculateur (live.ts, majTexte) : une seule ligne, un seul prix,
+  // et elle dit que le résultat l'utilise. Le prix du gramme vient en premier : le lecteur pèse en grammes.
   const [note, setNote] = useState('');
   const anyFailed = metals.some((m) => spot[m].failed);
   const allLive = metals.every((m) => spot[m].live);
@@ -23,27 +27,18 @@ export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
     <div className="mt-1 text-xs leading-relaxed text-navy-600" data-chrome>
       {metals.map((m) => {
         const q = spot[m];
-        const snap = SNAPSHOT.gbpPerOz[m];
-        const same = q.live && Math.round(q.gbpPerOz * 100) === Math.round(snap * 100);
         const name = METAL_NAME[m].toLowerCase();
-        const price = <span className="tabular-nums">{gbp(q.gbpPerOz)}</span>;
         return (
           <p key={m}>
-            <span className={`mr-1.5 inline-block h-2 w-2 rounded-full align-middle ${q.live ? 'bg-green-600' : 'bg-navy-400'}`} aria-hidden="true" />
-            {!q.live
-              ? <span>{METAL_NAME[m]} price recorded {stamp(SNAPSHOT.at[m])}: {price} an ounce of pure {name} (31.1 g).</span>
-              : same
-                ? (clock(q.at) !== clock(SNAPSHOT.at[m])
-                  ? <span>{METAL_NAME[m]} price checked at {clock(q.at)}: {price} an ounce of pure {name} (31.1 g), unchanged since {stamp(SNAPSHOT.at[m])}.</span>
-                  : <span>{METAL_NAME[m]} price {stamp(q.at)}: {price} an ounce of pure {name} (31.1 g).</span>)
-                : <span>{METAL_NAME[m]} price {stamp(q.at)}: {price} an ounce of pure {name} (31.1 g). The examples in the text use the {clock(SNAPSHOT.at[m])} price, {gbp(snap)}.</span>}
+            <span className={`mr-1.5 inline-block h-2 w-2 shrink-0 rounded-full align-middle ${q.live ? 'bg-green-600' : 'bg-navy-400'}`} aria-hidden="true" />
+            <span>{q.live ? `Live ${name} price` : `${METAL_NAME[m]} price recorded`}, {stamp(q.live ? q.at : SNAPSHOT.at[m])}: <span className="tabular-nums font-medium text-navy-900">{gbp2(finePerGram(q.gbpPerOz))}</span> a gram of pure {name} (<span className="tabular-nums">{gbp(q.gbpPerOz)}</span> an ounce). Your result uses this price.</span>
           </p>
         );
       })}
       {anyFailed && <p className="text-amber-800">The live price could not be reached: the figures use the price recorded when this page was built, at the time shown.</p>}
       <details className="mt-0.5">
         <summary className="cursor-pointer underline hover:text-navy-900">Where this price comes from</summary>
-        <p className="mt-1">It is the price traders use for pure {metals.map((m) => METAL_NAME[m].toLowerCase()).join(' and ')}, from gold-api.com, a free price service. A shop pays less. The page reads it once when it opens.</p>
+        <p className="mt-1">It is the price traders use for pure {metals.map((m) => METAL_NAME[m].toLowerCase()).join(' and ')}, from gold-api.com, a free price service. A shop pays less. The page reads it once when it opens, and the tables and examples in the text of this page are worked out at the same price.</p>
         <p className="mt-1">
           <button type="button" className="underline hover:text-navy-900" onClick={() => setNote(refreshSpot(metals) ? 'Checking for a newer price…' : 'Wait a few seconds before asking again.')}>Check for a newer price</button>
           {note && !allLive && <span className="ml-2">{note}</span>}
@@ -51,6 +46,12 @@ export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
       </details>
     </div>
   );
+}
+
+/** Réassurance sur les données, près des champs (test naïf du 2026-11-09 : elle n'était qu'en bas de page, en gris,
+ *  avec le mot « browser »). */
+export function PrivacyLine() {
+  return <p className="text-xs text-navy-600" data-chrome>Nothing you type here leaves your phone or computer. We never ask for your name or email.</p>;
 }
 
 /** Valeurs d'exemple (test naïf, 4e tour : « 10 g → £366.99 » sans le mot « example » sur l'accueil, la page
@@ -82,7 +83,7 @@ export function Frame({ title, fields, result, foot, mini = false }: { title?: s
     <div className={`not-prose rechner rounded-lg border border-accent-300 bg-white p-4 sm:p-5`} data-chrome>
       {title && <p className="mb-3 text-base font-semibold text-navy-900">{title}</p>}
       <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <form className="grid content-start gap-4" onSubmit={(e) => e.preventDefault()} {...(mini ? { 'data-simulateur-secondaire': '' } : {})}>{fields}</form>
+        <form className="grid content-start gap-4" onSubmit={(e) => e.preventDefault()} {...(mini ? { 'data-simulateur-secondaire': '' } : {})}>{fields}{!mini && <PrivacyLine />}</form>
         <div data-resultat aria-live="polite" className="rounded-lg bg-accent-50 p-4">{result}</div>
       </div>
       {foot}

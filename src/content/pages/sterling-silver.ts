@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Is sterling silver worth more as antiques than as scrap?', a: 'It can be. Pieces by known makers, early dates or unusual designs may sell above their metal value at auction or to a dealer. Plain modern cutlery and damaged items usually sell for their silver. Ask for both a scrap price and a resale estimate before deciding.' },
   ],
   body: (h) => {
-    const rows = [50, 100, 250, 500, 1000, 2000].map((g) => [`${g} g`, h.num(g * 0.925, 0) + ' g', h.gbp(h.at(g, 925, 'XAG'))]);
+    const rows = [50, 100, 250, 500, 1000, 2000].map((g) => [`${g} g`, h.num(g * 0.925, 0) + ' g', h.live(h.at(g, 925, 'XAG'), 'XAG')]);
     return `
 <h2>Sterling silver by weight</h2>
-${h.table(['Weight of sterling', 'Pure silver', 'Metal value'], rows, `Example worked out at the silver price of ${h.when}.`)}
+${h.table(['Weight of sterling', 'Pure silver', 'Metal value'], rows, `Worked out at the same silver price as the calculator above (${h.whenOf('XAG')}).`)}
 
 <h2>Reading the mark</h2>
 <p>${h.src('hallmarkSch2', 'UK hallmarking law')} sets out the marks an assay office strikes: its own office mark and the standard mark, which for sterling is the figures 925. A lion passant may appear as an optional pictorial mark, or a lion rampant on pieces marked in Edinburgh. Next to them sits the sponsor’s mark, the registered initials of the maker or importer. The ${h.src('bhcConsumer', 'British Hallmarking Council')} reminds buyers that an item described as silver must be hallmarked, subject to the weight exemptions. Silver items under {hm.silver} are exempt from hallmarking under ${h.src('hallmarkSch1', 'the hallmarking law')}, so small rings and earrings may be unmarked.</p>

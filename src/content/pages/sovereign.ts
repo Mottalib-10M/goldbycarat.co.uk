@@ -15,11 +15,11 @@ export default definePage({
   ],
   body: (h) => {
     const ids = ['quarter-sovereign', 'half-sovereign', 'sovereign', 'double-sovereign', 'five-pound'];
-    const rows = ids.map((id) => { const c = coinById(id); const fg = coinFineGrams(c); return [c.name, c.grossG ? h.num(c.grossG, 2) + ' g' : 'Only its gold is published (Royal Mint)', h.num(fg, 3) + ' g', h.gbp(h.at(fg, 1000))]; });
+    const rows = ids.map((id) => { const c = coinById(id); const fg = coinFineGrams(c); return [c.name, c.grossG ? h.num(c.grossG, 2) + ' g' : 'Not published (the Royal Mint gives only its gold)', h.num(fg, 3) + ' g', h.live(h.at(fg, 1000), 'XAU')]; });
     return `
 <h2>How much gold each sovereign coin holds, and its value</h2>
 <p><strong>A full sovereign holds just under a quarter of an ounce of pure gold; the other coins hold a fixed share of that.</strong></p>
-${h.table(['Coin', 'Weight of one coin', 'Pure gold', 'Gold value'], rows, `Example worked out at the gold price of ${h.when}. Weights from the coin law, rounded to a hundredth of a gram; quarter sovereign from the Royal Mint (0.059 oz of gold).`)}
+${h.table(['Coin', 'Weight of one coin', 'Pure gold', 'Gold value'], rows, `Worked out at the same gold price as the calculator above (${h.when}). Weights from the coin law, rounded to a hundredth of a gram; quarter sovereign from the Royal Mint (0.059 oz of gold).`)}
 
 <h2>Where the figures come from</h2>
 <p>${h.src('coinageAct', 'The law on coins')} sets the weight of each gold coin and its gold share: eleven twelfths pure gold and one twelfth other metal. For the sovereign that is {sov.g}; for the half sovereign {half.g}; for the £2 and £5 coins, two and five times the sovereign. The ${h.src('rmSovereign', 'Royal Mint’s specification')} for the 2026 sovereign gives 0.235 oz of pure gold, eleven twelfths of the coin, which matches. The quarter sovereign, introduced long after 1971, comes from the ${h.src('rmQuarter', 'Royal Mint’s quarter sovereign page')}: 0.059 oz.</p>

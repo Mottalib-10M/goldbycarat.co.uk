@@ -13,10 +13,10 @@ export default definePage({
     { q: 'What if a test shows a fineness between two standards?', a: 'Type the carat equivalent, or divide the fineness by 1,000 and multiply by 24. A test reading of 740 is 17.8ct: it fails the 750 standard and would only be marked 585 if it were hallmarked now. For selling, what counts is the measured gold, and the converter prices it per gram.' },
   ],
   body: (h) => {
-    const rows = [8, 9, 10, 12, 14, 15, 18, 20, 21, 22, 24].map((k) => { const legal = h.P.gold.find((g) => g.ct === k && g.hallmark); const f = legal ? legal.fineness : Math.round(k / 24 * 10000) / 10; return [`${k}ct`, h.num(f, f % 1 ? 1 : 0), legal ? 'UK standard' : 'Proportion only', h.gbp2(h.at(1, f))]; });
+    const rows = [8, 9, 10, 12, 14, 15, 18, 20, 21, 22, 24].map((k) => { const legal = h.P.gold.find((g) => g.ct === k && g.hallmark); const f = legal ? legal.fineness : Math.round(k / 24 * 10000) / 10; return [`${k}ct`, h.num(f, f % 1 ? 1 : 0), legal ? 'UK standard' : 'Proportion only', h.live(h.at(1, f), 'XAU', 'gbp2')]; });
     return `
 <h2>Carats and thousandths side by side</h2>
-${h.table(['Carat', 'Thousandths', 'Status', 'Per gram'], rows, `Gram price worked out at the gold price of ${h.when}.`)}
+${h.table(['Carat', 'Thousandths', 'Status', 'Per gram'], rows, `Gram price worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Where the law departs from the arithmetic</h2>
 <p>${h.src('hallmarkSch1', 'Schedule 1 of UK hallmarking law')} gives the carat equivalents used in British hallmarking: 9 carat 375, 14 carat 585, 18 carat 750, 22 carat 916.6. Two of them do not match k/24 exactly. Fourteen twenty-fourths is 583.3, so the standard is set higher at 585. Twenty-two twenty-fourths is 916.67, so the standard is set a hair lower at 916.6. ${h.src('hallmarkSch2', 'The hallmarking law')} adds 990 and 999 for pure gold. Any other figure is not a British standard and cannot be struck as a fineness mark.</p>

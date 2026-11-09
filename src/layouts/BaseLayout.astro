@@ -161,24 +161,32 @@ const crumbAside = Astro.slots.has('crumb-aside') ? (await Astro.slots.render('c
       )}
       <slot />
     </main>
+    {/* Pied de page (test naïf du 2026-11-09, trois testeurs : « 3 à 4 écrans de bas de page à chaque fois », date
+         répétée, petit trait vert du badge). Sur téléphone : une ligne courte, le reste replié en un seul bloc ;
+         à partir de 768 px le bloc s'ouvre (script ci-dessous) et son titre disparaît. Une seule date. */}
     <footer class="mt-16 border-t border-navy-200 bg-navy-50">
-      <div class="mx-auto max-w-6xl px-4 py-12">
-        <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {footerCols.map((col) => (<div><h2 class="mb-3 text-sm font-semibold text-navy-900">{col.label}</h2><ul class="space-y-2 text-sm text-navy-600">{col.links.map((l) => <li><a href={l.href} class="hover:text-navy-900">{l.label}</a></li>)}</ul></div>))}
-        </div>
-        {popular.length > 0 && (<div class="mt-8 border-t border-navy-200 pt-6"><h2 class="mb-2 text-sm font-semibold text-navy-900">{ui.footerPopular}</h2><p class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-navy-600">{popular.map((p) => <a href={p.href} class="hover:text-navy-900">{p.label}</a>)}</p></div>)}
-        <div class="mt-8 border-t border-navy-200 pt-8">
-          <div class="flex flex-col items-center gap-2 text-center text-sm text-navy-500">
-            <p><span class="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3 py-0.5 text-xs font-medium text-green-700"><span class="inline-block h-1.5 w-1.5 rounded-full bg-green-500" aria-hidden="true"></span>{ui.footerValidated}</span></p>
-            <p>{ui.footerBrowser}</p>
-            <p>{ui.asOf} {YEAR}, {ui.lastUpdated} <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time></p>
-            <p>&copy; {new Date().getFullYear()} {SITE_NAMES[lang]}. {ui.footerDisclaimer}</p>
-            <p>{ui.ogl} <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank" rel="nofollow noopener" class="underline hover:text-navy-900">Open Government Licence v3.0</a>.</p>
-            {(GA4_ID || CLARITY_ID) && CONSENT_MODE !== 'none' && <p><button type="button" data-consent-manage class="underline hover:text-navy-900">{consentStrings(lang).manage}</button></p>}
+      <div class="mx-auto max-w-6xl px-4 py-6 md:py-12">
+        <p class="text-center text-sm text-navy-600 md:hidden">&copy; {new Date().getFullYear()} {SITE_NAMES[lang]} · independent, not a gold buyer · rules checked <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time></p>
+        <details class="pied-replie mt-2 md:mt-0" data-pied>
+          <summary class="cursor-pointer text-center text-sm font-medium text-navy-700 underline md:hidden">All pages, about this site and legal notices</summary>
+          <div class="mt-6 grid grid-cols-2 gap-8 md:mt-0 md:grid-cols-4">
+            {footerCols.map((col) => (<div><h2 class="mb-3 text-sm font-semibold text-navy-900">{col.label}</h2><ul class="space-y-2 text-sm text-navy-600">{col.links.map((l) => <li><a href={l.href} class="hover:text-navy-900">{l.label}</a></li>)}</ul></div>))}
           </div>
-        </div>
+          {popular.length > 0 && (<div class="mt-8 border-t border-navy-200 pt-6"><h2 class="mb-2 text-sm font-semibold text-navy-900">{ui.footerPopular}</h2><p class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-navy-600">{popular.map((p) => <a href={p.href} class="hover:text-navy-900">{p.label}</a>)}</p></div>)}
+          <div class="mt-8 border-t border-navy-200 pt-8">
+            <div class="flex flex-col items-center gap-2 text-center text-sm text-navy-500">
+              <p><span class="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3 py-0.5 text-xs font-medium text-green-700"><span class="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-green-500" aria-hidden="true"></span>{ui.footerValidated}</span></p>
+              <p>{ui.footerBrowser}</p>
+              <p class="hidden md:block">{ui.asOf} {YEAR}, {ui.lastUpdated} <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time></p>
+              <p>&copy; {new Date().getFullYear()} {SITE_NAMES[lang]}. {ui.footerDisclaimer}</p>
+              <p>{ui.ogl} <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank" rel="nofollow noopener" class="underline hover:text-navy-900">Open Government Licence v3.0</a>.</p>
+              {(GA4_ID || CLARITY_ID) && CONSENT_MODE !== 'none' && <p><button type="button" data-consent-manage class="underline hover:text-navy-900">{consentStrings(lang).manage}</button></p>}
+            </div>
+          </div>
+        </details>
       </div>
     </footer>
+    <script is:inline>(function(){var d=document.querySelector('[data-pied]');if(!d||!window.matchMedia)return;var m=matchMedia('(min-width: 768px)');function f(){if(m.matches)d.open=true}f();m.addEventListener&&m.addEventListener('change',f)})();</script>
     <script>
       const toggle = document.getElementById('mobile-menu-toggle'); const menu = document.getElementById('mobile-menu');
       toggle?.addEventListener('click', () => { const hidden = menu?.classList.toggle('hidden'); toggle.setAttribute('aria-expanded', hidden ? 'false' : 'true'); });

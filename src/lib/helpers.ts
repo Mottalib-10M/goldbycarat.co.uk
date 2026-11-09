@@ -18,8 +18,13 @@ export function helpers(): Helpers {
     src: (key: SourceKey, text?: string) => { const s = P.sources[key]; if (!s) throw new Error(`source inconnue ${key}`); return `<a href="${s.url}" target="_blank" rel="nofollow noopener noreferrer">${text ?? s.label.en}</a>`; },
     num: (n, d = 0) => formatNumber(n, d),
     at: (g, f, m = 'XAU') => metalValue(g, f, SNAPSHOT.gbpPerOz[m]),
-    when: stamp(SNAPSHOT.at.XAU),
-    table: (headers, rows, caption0) => { const caption = caption0 && caption0.includes(stamp(SNAPSHOT.at.XAU)) && !/calculator/.test(caption0) ? `${caption0} The calculator above checks the live price and says whether it has moved since.` : caption0; return `<div class="not-prose my-6 overflow-x-auto"><table class="journal empile w-full text-sm">${caption ? `<caption class="mb-2 text-start text-sm text-navy-600">${caption}</caption>` : ''}<thead><tr>${headers.map((x) => `<th scope="col" class="px-3 py-2 text-start font-semibold text-navy-900">${x}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr class="border-b border-navy-100">${r.map((c, i) => `<td data-label="${String(headers[i] ?? '').replace(/"/g, '&quot;')}" class="tabular-nums px-3 py-2 text-start text-navy-800">${typeof c === 'number' ? esc(formatNumber(c, 0)) : c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; },
+    // Un seul chiffre par notion (testeurs du 2026-11-09) : un montant qui dépend du cours est posé dans un span
+    // que live.ts recalcule au cours du calculateur ; l'heure citée suit le même cours.
+    live: (n, m = 'XAU', f = 'gbp') => `<span data-cours="${m}" data-v="${n}" data-f="${f}">${f === 'gbp2' ? gbp2(n) : f === 'pct' ? pct(n, 1) : gbp(n)}</span>`,
+    when: `<span data-cours-heure="XAU">${stamp(SNAPSHOT.at.XAU)}</span>`,
+    whenOf: (m) => `<span data-cours-heure="${m}">${stamp(SNAPSHOT.at[m])}</span>`,
+    recorded: stamp(SNAPSHOT.at.XAU),
+    table: (headers, rows, caption) => { return `<div class="not-prose my-6 overflow-x-auto"><table class="journal empile w-full text-sm">${caption ? `<caption class="mb-2 text-start text-sm text-navy-600">${caption}</caption>` : ''}<thead><tr>${headers.map((x) => `<th scope="col" class="px-3 py-2 text-start font-semibold text-navy-900">${x}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr class="border-b border-navy-100">${r.map((c, i) => `<td data-label="${String(headers[i] ?? '').replace(/"/g, '&quot;')}" class="tabular-nums px-3 py-2 text-start text-navy-800">${typeof c === 'number' ? esc(formatNumber(c, 0)) : c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; },
   };
 }
 

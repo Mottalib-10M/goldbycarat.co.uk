@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Why does a gram of 24ct cost more in a shop than this page shows?', a: 'This page shows the metal at the wholesale spot price. A shop adds the cost of making the piece, its own margin and, for jewellery, VAT. Bars and coins carry a dealer’s premium over spot. The gap is a selling price, not an error in the spot figure.' },
   ],
   body: (h) => {
-    const rows = [1, 5, 10, 20, 31.1035, 50, 100].map((g) => [g === 31.1035 ? '1 troy oz' : `${g} g`, h.gbp(h.at(g, 999)), h.gbp(h.at(g, 999.9)), h.gbp(h.at(g, 990))]);
+    const rows = [1, 5, 10, 20, 31.1035, 50, 100].map((g) => [g === 31.1035 ? '1 troy oz' : `${g} g`, h.live(h.at(g, 999), 'XAU'), h.live(h.at(g, 999.9), 'XAU'), h.live(h.at(g, 990), 'XAU')]);
     return `
 <h2>Pure gold by weight and grade</h2>
-${h.table(['Weight', 'At 999 (24ct)', 'At 999.9 (bullion)', 'At 990'], rows, `Example worked out at the gold price of ${h.when}.`)}
+${h.table(['Weight', 'At 999 (24ct)', 'At 999.9 (bullion)', 'At 990'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 
 <h2>Why the gram price of 24ct is the starting point</h2>
 <p>The world market quotes gold by the troy ounce of pure metal. A troy ounce is {oz} g, fixed in ${h.src('ukWeights', 'UK weights law')}, so a gram of fine gold is worth one {oz2}th of the ounce price. Every other figure on this site is that gram price times a fraction: 0.375 for 9ct, 0.75 for 18ct, {f.22} thousandths for 22ct. When you see the 24ct gram price move, every other carat moves in the same proportion.</p>

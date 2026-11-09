@@ -15,11 +15,11 @@ export default definePage({
   ],
   body: (h) => {
     const v = h.at(10, 375);
-    const rows = [0.6, 0.7, 0.8, 0.9].map((p) => [h.pct(p, 0), h.gbp(v * p), h.gbp(v * (1 - p))]);
+    const rows = [0.6, 0.7, 0.8, 0.9].map((p) => [h.pct(p, 0), h.live(v * p), h.live(v * (1 - p))]);
     return `
 <h2>Why a percentage beats a price</h2>
 <p><strong>A percentage stays comparable when the gold price moves; a sum of money does not.</strong> Gold moves every minute the markets are open. An offer of ${h.gbp(exampleOffer(10, 9, 0.7))} for 10 g of 9ct might be good on one day and poor a week later. Turned into a share of the metal at the moment of the quote, it becomes a number you can compare across buyers and across days. The checker reads today’s gold price when you open the page; if you are checking an old quote, keep in mind that the price may have moved since.</p>
-${h.table(['Share of the gold value', 'Offer on 10 g of 9ct', 'Kept by the buyer'], rows, `Example: 10 g of 9ct holds ${h.gbp(v)} of gold at the price of ${h.when}.`)}
+${h.table(['Share of the gold value', 'Offer on 10 g of 9ct', 'Kept by the buyer'], rows, `Example: 10 g of 9ct holds ${h.live(v)} of gold at the same price as the calculator above (${h.when}).`)}
 <p>“Kept by the buyer” is not profit. It pays for refining, for carrying the price risk until the gold is sold on, for the shop, the staff and, for postal buyers, insured delivery. What it tells you is how much room there is between one offer and another.</p>
 
 <h2>Check the weight and the carat too</h2>

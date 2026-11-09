@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Is profit on a gold bar taxable?', a: 'Possibly. Unlike sovereigns, a bar is not currency, so it is a chattel for Capital Gains Tax. If the whole sale is {chattel} or less, the gain is exempt; above that, the gain counts, capped at five thirds of the excess over {chattel}, and the annual exempt amount comes off.' },
   ],
   body: (h) => {
-    const rows = h.P.barSizesGrams.map((g) => [Math.abs(g - 31.1034768) < 0.001 ? '1 troy oz' : g >= 1000 ? '1 kg' : `${h.num(g, g % 1 ? 1 : 0)} g`, h.gbp(h.at(g, 999.9))]);
+    const rows = h.P.barSizesGrams.map((g) => [Math.abs(g - 31.1034768) < 0.001 ? '1 troy oz' : g >= 1000 ? '1 kg' : `${h.num(g, g % 1 ? 1 : 0)} g`, h.live(h.at(g, 999.9), 'XAU')]);
     return `
 <h2>Metal in each bar size</h2>
-${h.table(['Bar', 'Gold at 999.9'], rows, `Example worked out at the gold price of ${h.when}. Sizes from the list of accepted weights in HMRC VAT Notice 701/21.`)}
+${h.table(['Bar', 'Gold at 999.9'], rows, `Worked out at the same gold price as the calculator above (${h.when}). Sizes from the list of accepted weights in HMRC VAT Notice 701/21.`)}
 
 <h2>Premium: what you pay above the metal</h2>
 <p>No dealer sells gold at spot. The difference between the price and the metal is the premium, and it falls as the bar gets bigger. Type a dealer’s price into the calculator and it shows the premium in pounds and as a percentage of the metal. Compare two or three dealers on the same bar size and on the same day, because the spot price moves.</p>

@@ -13,11 +13,11 @@ export default definePage({
     { q: 'Why is palladium priced so differently from platinum?', a: 'They are separate markets with different uses and supply, so their prices move independently. Neither is reliably dearer than the other. The table on this page shows both at the moment the page was built, and the calculator reads the live palladium price.' },
   ],
   body: (h) => {
-    const rows = h.P.palladium.map((f) => [String(f), h.gbp2(h.at(1, f, 'XPD')), h.gbp(h.at(5, f, 'XPD')), h.gbp(h.at(10, f, 'XPD'))]);
+    const rows = h.P.palladium.map((f) => [String(f), h.live(h.at(1, f, 'XPD'), 'XPD', 'gbp2'), h.live(h.at(5, f, 'XPD'), 'XPD'), h.live(h.at(10, f, 'XPD'), 'XPD')]);
     return `
 <h2>Palladium by standard and weight</h2>
-${h.table(['Standard', 'Per gram', '5 g', '10 g'], rows, `Example worked out at the palladium price of ${h.when}.`)}
-<p>At the same moment, a troy ounce of palladium was ${h.gbp(h.at(31.1034768, 1000, 'XPD'))} against ${h.gbp(h.at(31.1034768, 1000, 'XPT'))} for platinum and ${h.gbp(h.at(31.1034768, 1000))} for gold.</p>
+${h.table(['Standard', 'Per gram', '5 g', '10 g'], rows, `Worked out at the same palladium price as the calculator above (${h.whenOf('XPD')}).`)}
+<p>When this page was built (${h.recorded}), a troy ounce of palladium was ${h.gbp(h.at(31.1034768, 1000, 'XPD'))} against ${h.gbp(h.at(31.1034768, 1000, 'XPT'))} for platinum and ${h.gbp(h.at(31.1034768, 1000))} for gold; the calculator above gives the palladium price of the moment.</p>
 
 <h2>The legal standards</h2>
 <p>${h.src('hallmarkSch2', 'UK hallmarking law')} lists three standards for palladium: ${h.P.palladium.join(', ')}. ${h.src('hallmarkSch1', 'The hallmarking law')} exempts palladium articles under {hm.palladium}. A piece marked 500 holds half the palladium of a 999 piece of the same weight, so the standard matters as much as the scales.</p>

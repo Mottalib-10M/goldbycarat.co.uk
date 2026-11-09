@@ -17,7 +17,7 @@ import { organizationSchema, websiteSchema, webApplicationSchema, faqSchema, web
 import { AUTHOR_NAME } from '../data/site-config';
 const lang = 'en' as const;
 const H = HOME;
-const x = { title: fill(H.title), description: fill(H.description), h1: fill(H.h1), lead: fill(H.lead), resume: fill(H.resume), faqs: H.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a) })) };
+const x = { title: fill(H.title), description: fill(H.description), h1: fill(H.h1), lead: fill(H.lead), resume: fill(H.resume), faqs: H.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a), open: f.open })) };
 const body = replierSections(fill(H.body(helpers())), 0, 'More about gold, carats, coins and tax: tap a heading to open it.');
 const parts = body.split(/<!--tool:([a-z]+)-->/);
 const path = route('home', lang);

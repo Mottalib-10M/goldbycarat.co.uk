@@ -19,7 +19,7 @@ const sov = coinById('sovereign');
     <p>The price of a troy ounce of gold, silver, platinum and palladium in pounds comes from gold-api.com, which publishes it for each metal directly in GBP. Its terms, read on {displayDate(P.retrieved_at, 'en-GB')}, allow commercial use, forbid several requests per second and give no guarantee of accuracy. We use it as follows:</p>
     <ul>
       <li>when the site is built, one request per metal, spaced more than a second apart, is saved with its time; the text of each page and the first display of each calculator use that price, and say when it was recorded (the current file: gold <span set:html={stamp(SNAPSHOT.at.XAU)} />);</li>
-      <li>when you open a page, your browser asks gold-api.com for the price of each metal shown on it, one request at a time at least 1.2 seconds apart, and the calculator shows the time that price carries;</li>
+      <li>when you open a page, your browser asks gold-api.com for the price of each metal shown on it, one request at a time at least 1.2 seconds apart; the calculator shows the time that price carries, and the amounts in the text and tables of the page are worked out again at that same price, so a weight never shows two values;</li>
       <li>if that request fails, the calculator keeps the build price and says so, with its date and time;</li>
       <li>nothing refreshes by itself; the “Check for a newer price” button asks again, at most once every 15 seconds.</li>
     </ul>

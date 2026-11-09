@@ -13,10 +13,10 @@ export default definePage({
     { q: 'How do I compare two dealers’ prices for silver Britannias?', a: 'Type each price per coin into the calculator and read it as a percentage of the silver. Make sure both prices include VAT and delivery, and compare them at the same moment, because the silver price moves. For larger orders, ask for the price per coin at your quantity, since it often falls in tubes or boxes.' },
   ],
   body: (h) => {
-    const rows = [1, 10, 25, 100, 500].map((n) => [`${n} coin${n > 1 ? 's' : ''}`, h.gbp(h.at(n * 31.1034768, 999, 'XAG')), h.gbp(h.at(n * 31.1034768, 999, 'XAG') * (1 + h.P.vat.standardRate))]);
+    const rows = [1, 10, 25, 100, 500].map((n) => [`${n} coin${n > 1 ? 's' : ''}`, h.live(h.at(n * 31.1034768, 999, 'XAG'), 'XAG'), h.live(h.at(n * 31.1034768, 999, 'XAG') * (1 + h.P.vat.standardRate), 'XAG')]);
     return `
 <h2>Silver Britannias by the number</h2>
-${h.table(['Coins', 'Metal value', 'Metal value + VAT'], rows, `Example worked out at the silver price of ${h.when}. The last column only shows the effect of VAT on the metal; a dealer’s price also includes its premium.`)}
+${h.table(['Coins', 'Metal value', 'Metal value + VAT'], rows, `Worked out at the same silver price as the calculator above (${h.whenOf('XAG')}). The last column only shows the effect of VAT on the metal; a dealer’s price also includes its premium.`)}
 
 <h2>Specification</h2>
 <p>The ${h.src('rmSilverBritannia', 'Royal Mint’s 2026 silver Britannia')} contains one troy ounce of 999 fine silver. The calculator values it from that content.</p>

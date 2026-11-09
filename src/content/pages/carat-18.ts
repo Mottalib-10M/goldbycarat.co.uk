@@ -13,10 +13,10 @@ export default definePage({
     { q: 'Should I sell an 18ct ring for scrap or as jewellery?', a: 'Check both. A scrap price is a share of the metal, and this page tells you the metal. A ring with a good diamond, a known maker or a period design may be worth more as jewellery than as gold. A jeweller or auction house can give a resale estimate; compare it with the scrap offer.' },
   ],
   body: (h) => {
-    const rows = [1, 2, 3, 5, 10, 20].map((g) => [`${g} g`, h.num(g * 0.75, 2) + ' g', h.gbp(h.at(g, 750))]);
+    const rows = [1, 2, 3, 5, 10, 20].map((g) => [`${g} g`, h.num(g * 0.75, 2) + ' g', h.live(h.at(g, 750), 'XAU')]);
     return `
 <h2>18ct gold value by weight</h2>
-${h.table(['Weight of 18ct', 'Pure gold inside', 'Metal value'], rows, `Example worked out at the gold price of ${h.when}; the calculator above follows the price of the moment.`)}
+${h.table(['Weight of 18ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>A plain 18ct wedding band of 4 or 5 g, a common weight, sits in the middle of that table. A man’s signet ring may weigh twice as much; a fine chain much less.</p>
 
 <h2>Why 18ct is exactly 750</h2>
@@ -28,7 +28,7 @@ ${h.table(['Weight of 18ct', 'Pure gold inside', 'Metal value'], rows, `Example 
 <!--tool:offer-->
 
 <h2>Selling an 18ct piece</h2>
-<p>Because 18ct is three times as rich as 9ct by weight, every percentage point on the offer is worth more. A 10 percentage point gap on 10 g of 18ct is ${h.gbp(h.at(10, 750) * 0.1)} at our recorded price, compared with ${h.gbp(h.at(10, 375) * 0.1)} on 10 g of 9ct. That makes it more worthwhile to get two or three quotes for 18ct. If the piece was inherited, the ${h.a('inherited', 'page on selling inherited gold')} covers probate value and tax.</p>
+<p>Because 18ct is three times as rich as 9ct by weight, every percentage point on the offer is worth more. A 10 percentage point gap on 10 g of 18ct is ${h.live(h.at(10, 750) * 0.1, 'XAU')} at our recorded price, compared with ${h.live(h.at(10, 375) * 0.1, 'XAU')} on 10 g of 9ct. That makes it more worthwhile to get two or three quotes for 18ct. If the piece was inherited, the ${h.a('inherited', 'page on selling inherited gold')} covers probate value and tax.</p>
 `;
   },
 });

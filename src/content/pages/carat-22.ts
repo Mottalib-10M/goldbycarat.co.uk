@@ -13,10 +13,10 @@ export default definePage({
     { q: 'How heavy is a typical set of 22ct bangles?', a: 'There is no typical weight, and guessing is costly at 22ct prices. Weigh each bangle separately on scales that read to 0.1 g. Hollow bangles can weigh far less than solid ones of the same size, and some have wax or lac inside to stiffen them, which adds weight that is not gold.' },
   ],
   body: (h) => {
-    const rows = [5, 10, 20, 40, 50, 100].map((g) => [`${g} g`, h.num(g * 0.9166, 2) + ' g', h.gbp(h.at(g, 916.6))]);
+    const rows = [5, 10, 20, 40, 50, 100].map((g) => [`${g} g`, h.num(g * 0.9166, 2) + ' g', h.live(h.at(g, 916.6), 'XAU')]);
     return `
 <h2>22ct gold value by weight</h2>
-${h.table(['Weight of 22ct', 'Pure gold inside', 'Metal value'], rows, `Example worked out at the gold price of ${h.when}. The calculator recomputes with the price of the moment.`)}
+${h.table(['Weight of 22ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
 <p>Weights in this table run higher than on the 9ct and 18ct pages because 22ct is usually sold by weight in sets: a bangle can weigh more than a whole box of 9ct chains.</p>
 
 <h2>Jewellery standard and coin standard</h2>

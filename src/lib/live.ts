@@ -11,6 +11,7 @@
  */
 import { useEffect, useState } from 'react';
 import { SNAPSHOT, type Metal } from './engine/params';
+import { gbp, gbp2, pct, stamp } from './money';
 
 export interface Quote { gbpPerOz: number; at: string; live: boolean; failed: boolean }
 export type Spot = Record<Metal, Quote>;
@@ -41,8 +42,29 @@ function fetchMetal(m: Metal) {
       current = { ...current, [m]: { ...current[m], failed: true } };
     }
     subs.forEach((f) => f(current));
+    majTexte(m);
     await pause(1200);
   });
+}
+
+/** Un seul chiffre par notion (testeurs naïfs du 2026-11-09, trois sur trois : « £369.30 en haut, £369.46 dans
+ *  le tableau : lequel croire ? »). Les montants du texte et des tableaux qui dépendent du cours sont posés au
+ *  build dans un <span data-cours="XAU" data-v="…" data-f="gbp|gbp2|pct"> (helpers.live), au relevé du build ;
+ *  quand le cours du moment arrive, ils sont recalculés au même cours que le calculateur (une valeur de métal
+ *  est proportionnelle au cours ; une part d'offre, « pct », lui est inversement proportionnelle). L'heure du
+ *  relevé citée par le texte (<span data-cours-heure="XAU">) passe à celle du cours du moment. */
+function majTexte(m: Metal) {
+  if (typeof document === 'undefined') return;
+  const q = current[m];
+  if (!q.live) return;
+  const r = q.gbpPerOz / SNAPSHOT.gbpPerOz[m];
+  document.querySelectorAll<HTMLElement>(`[data-cours="${m}"]`).forEach((el) => {
+    const v = Number(el.dataset.v);
+    if (!Number.isFinite(v)) return;
+    const f = el.dataset.f;
+    el.textContent = f === 'pct' ? pct(v / r, Number(el.dataset.d ?? 1)) : f === 'gbp2' ? gbp2(v * r) : gbp(v * r);
+  });
+  document.querySelectorAll<HTMLElement>(`[data-cours-heure="${m}"]`).forEach((el) => { el.textContent = stamp(q.at); });
 }
 
 /** Lit le cours des métaux demandés. Premier rendu : relevé du build ; ensuite : cours du moment. */

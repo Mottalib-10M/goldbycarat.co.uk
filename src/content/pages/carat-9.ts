@@ -16,19 +16,16 @@ export default definePage({
     const rows = [1, 2, 5, 10, 20, 50, 100].map((g) => [`${g} g`, h.num(g * 0.375, 3) + ' g', h.live(h.at(g, 375), 'XAU')]);
     return `
 <h2>9ct gold price by weight</h2>
-${h.table(['Weight of 9ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}).`)}
-<p>The table is useful for a quick check against a quote, because most offers for 9ct come as a price per gram. Divide the per-gram offer by the per-gram metal value and you have the share. Or type both into the calculator and let it divide.</p>
+${h.table(['Weight of 9ct', 'Pure gold inside', 'Metal value'], rows, `Worked out at the same gold price as the calculator above (${h.when}). Amounts over £1,000 are rounded to the pound.`)}
+<p>Quoted a price per gram? Multiply it by your weight and type the total in the offer box above: the calculator shows what share of the gold it pays.</p>
 
-<h2>Where the 375 comes from</h2>
-<p><strong>9 parts in 24 is exactly 375 parts in 1,000, so for 9ct the sum and the law agree.</strong> UK hallmarking law ${h.src('hallmarkSch1', 'links each number to a carat')} and ${h.src('hallmarkSch2', 'lists 375')} among the six numbers allowed on gold. An article marked 375 must contain at least that proportion, measured across the whole piece including solder, so a well-made 9ct item usually holds a fraction more, never less.</p>
+<h2>Where the 375 comes from, and how to check it</h2>
+<p><strong>9 parts in 24 is exactly 375 parts in 1,000, so for 9ct the sum and the law agree.</strong> UK hallmarking law ${h.src('hallmarkSch1', 'links each number to a carat')} and ${h.src('hallmarkSch2', 'lists 375')} among the six numbers allowed on gold. A piece marked 375 must contain at least that share of gold, so a well-made 9ct item usually holds a fraction more, never less.</p>
+<p>Look for “375” in an oval frame next to the symbol of an official testing office (an assay office): ${h.P.assayOffices.map((o) => `${o.mark} (${o.city})`).join(', ')}. Items under {hm.gold} of gold need no mark and may carry nothing. A stamp reading “9K” or “9ct” alone, with no office symbol, is a maker’s claim, not a British hallmark. The ${h.a('hallmarks', 'hallmark guide')} explains each part.</p>
 
 <h2>What a buyer does with your 9ct gold</h2>
-<p><strong>A buyer will offer less than the value above, because it has to melt and refine your gold.</strong> A scrap buyer does not resell your ring; it sells the metal to a refiner, which melts it, separates the gold from the silver and copper and pays for the gold it recovers. Every step costs money, and with 9ct the buyer handles nearly three grams of alloy for every gram of gold. That is one reason 9ct offers tend to be a smaller share of the metal than offers for 22ct, but the gap is set by each buyer, not by any rule. Only a comparison of several quotes, each turned into a percentage, tells you whether one is fair.</p>
-<p>A second-hand jeweller may pay more than the metal for a piece it can sell as it is, such as a signed or antique item. If yours might fall into that category, ask for a valuation as jewellery as well as a scrap price.</p>
-
-<h2>Checking the mark</h2>
-<p>Look for “375” in an oval frame next to the symbol of a testing office: ${h.P.assayOffices.map((o) => `${o.mark} (${o.city})`).join(', ')}. Items under {hm.gold} of gold are exempt and may carry nothing. A stamp reading “9K” or “9ct” alone, with no office mark, is not a British hallmark. The ${h.a('hallmarks', 'hallmark guide')} explains each part.</p>
-<p>Already have an offer? Type it in the “Offer you were given” box at the top of this page to see what share of the gold it pays, or use the ${h.a('offer', 'offer checker')} to compare several quotes. If you are selling a mixed lot of 9ct and 18ct, the ${h.a('scrap', 'scrap gold calculator')} values each carat separately and adds them up.</p>
+<p><strong>A buyer will offer less than the value above, because it has to melt and refine your gold.</strong> A scrap buyer does not resell your ring; it sells the metal to a refiner, which melts it and pays for the gold it recovers. Every step costs money, and with 9ct the buyer handles nearly three grams of other metal for every gram of gold. Nobody publishes what share buyers pay, so the only way to know whether an offer is fair is to compare two or three quotes, each turned into a percentage by the ${h.a('offer', 'offer checker')}.</p>
+<p>A second-hand jeweller may pay more than the gold is worth for a piece it can sell as it is, such as a signed or antique item. Pieces of several carats? The ${h.a('scrap', 'mixed lot calculator')} values them together.</p>
 `;
   },
 });

@@ -1,6 +1,6 @@
 import type { Locale } from './routes';
 const en = {
-  updatedOn: 'Rules checked on', editorialPolicy: 'Editorial policy', contactLabel: 'Contact', reviewedBy: 'Figures and rules checked by the site’s publisher,',
+  updatedOn: 'Gold rules and tax figures checked on', editorialPolicy: 'Editorial policy', contactLabel: 'Contact', reviewedBy: 'Figures and rules checked by the site’s publisher,',
   skipToContent: 'Skip to content', mainNav: 'Main navigation', breadcrumbLabel: 'Breadcrumb', breadcrumbHome: 'Home', menuOpen: 'Open menu',
   faqTitle: 'Questions before you sell or buy', faqHint: 'Tap a question to see the answer.', relatedCalculators: 'Work out next', sourcesTitle: 'Where our figures come from: laws, the UK tax office (HMRC) and the Royal Mint', writtenBy: 'Worked out by',
   asOf: 'Rules and rates as of', lastUpdated: 'last read on', footerValidated: 'Checked against UK hallmarking law, Royal Mint coin weights and the tax rules for 2026 to 2027', footerBrowser: 'Every sum runs in your browser · nothing you type is sent · the only request is for the metal price, from gold-api.com',

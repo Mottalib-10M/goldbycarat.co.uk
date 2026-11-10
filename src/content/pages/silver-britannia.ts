@@ -6,7 +6,7 @@ export default definePage({
   title: 'Silver Britannia Value: 1 oz 999 Silver Coin in Pounds',
   description: 'Silver Britannia value at the live, timed silver price: one troy ounce of 999 silver, the premium a dealer asks, VAT on silver coins and the CGT position.',
   h1: 'Silver Britannia value',
-  resume: 'A one ounce silver Britannia contains a troy ounce of silver, {oz2} grams, at 999 fine according to the Royal Mint’s 2026 specification, so its metal value is the silver spot price of an ounce, which this calculator reads in pounds from gold-api.com and shows with its time. Type the price a dealer asks or offers to see it as a percentage of the silver. Two rules make the silver coin very different from its gold namesake. Silver is never investment gold, so a silver Britannia bought from a UK dealer carries VAT at {vat}, and the gap between buying and selling prices is wide. But it is UK legal tender like the gold coin, so a gain on it is outside Capital Gains Tax. Gold by Carat is an independent site, not a silver buyer or a dealer, and sells no coins.',
+  resume: 'A one ounce silver Britannia contains a troy ounce (31.1 g) of silver, {oz2} grams, at 999 fine according to the Royal Mint’s 2026 specification, so its metal value is the silver spot price (the price traders use for pure metal) of an ounce, which this calculator reads in pounds from gold-api.com and shows with its time. Type the price a dealer asks or offers to see it as a percentage of the silver. Two rules make the silver coin very different from its gold namesake. Silver is never investment gold, so a silver Britannia bought from a UK dealer carries VAT at {vat}, and the gap between buying and selling prices is wide. But it is UK legal tender (official money) like the gold coin, so a gain on it is outside Capital Gains Tax. Gold by Carat is an independent site, not a silver buyer or a dealer, and sells no coins.',
   faqs: [
     { q: 'Why does a silver Britannia cost so much more than its silver?', a: 'Three costs sit on top of the metal: the Royal Mint’s and the dealer’s margins, which are large relative to a coin worth tens of pounds, and VAT at {vat} on the whole price, because silver is not investment gold. Selling back, you get no VAT refund, so the coin has to rise a long way to break even.' },
     { q: 'Is there Capital Gains Tax on silver Britannias?', a: 'No. Silver Britannias are UK legal tender, so they are sterling currency and the tax law excludes them from chargeable assets. A profit on them is never taxed, however many you sell, which is one reason they are popular despite the VAT charged when you buy them.' },
@@ -21,10 +21,9 @@ ${h.table(['Coins', 'Metal value', 'Metal value + VAT'], rows, `Worked out at th
 <h2>Specification</h2>
 <p>The ${h.src('rmSilverBritannia', 'Royal Mint’s 2026 silver Britannia')} contains one troy ounce of 999 fine silver. The calculator values it from that content.</p>
 
-<h2>VAT on silver</h2>
-<p>${h.src('vatNotice70121', 'HMRC’s VAT guidance')} exempts only investment gold. Silver coins and bars are standard-rated at ${h.src('vatRates', '{vat}')}, so a dealer adds VAT to its price. When you sell back as a private person, no VAT is involved, but the dealer’s buying price reflects only the silver and its own margin. That round trip is the main cost of holding silver coins.</p>
+<h2>VAT and Capital Gains Tax</h2>
+<p>${h.src('vatNotice70121', 'the UK tax office’s VAT guidance')} exempts only investment gold. Silver coins and bars are standard-rated at ${h.src('vatRates', '{vat}')}, so a dealer adds VAT to its price. When you sell back as a private person, no VAT is involved, but the dealer’s buying price reflects only the silver and its own margin. That round trip is the main cost of holding silver coins.</p>
 
-<h2>Capital Gains Tax</h2>
 <p>The silver Britannia is legal tender in the UK, so it is sterling currency and ${h.src('tcga21', 'not a chargeable asset')}. Gains are not taxed, however large. Foreign silver coins, such as Maple Leafs or Eagles, do not have this exemption.</p>
 <p>The ${h.a('silver', 'silver price page')} gives the price per gram and kilo, and the ${h.a('britannia', 'gold Britannia page')} covers the gold coin.</p>
 `;

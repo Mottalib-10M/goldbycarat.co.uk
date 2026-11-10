@@ -166,7 +166,7 @@ const crumbAside = Astro.slots.has('crumb-aside') ? (await Astro.slots.render('c
          à partir de 768 px le bloc s'ouvre (script ci-dessous) et son titre disparaît. Une seule date. */}
     <footer class="mt-16 border-t border-navy-200 bg-navy-50">
       <div class="mx-auto max-w-6xl px-4 py-6 md:py-12">
-        <p class="text-center text-sm text-navy-600 md:hidden">&copy; {new Date().getFullYear()} {SITE_NAMES[lang]} · independent, not a gold buyer · rules checked <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time></p>
+        <p class="text-center text-sm text-navy-600 md:hidden">&copy; {new Date().getFullYear()} {SITE_NAMES[lang]} · independent, not a gold buyer</p>
         <details class="pied-replie mt-2 md:mt-0" data-pied>
           <summary class="cursor-pointer text-center text-sm font-medium text-navy-700 underline md:hidden">All pages, about this site and legal notices</summary>
           <div class="mt-6 grid grid-cols-2 gap-8 md:mt-0 md:grid-cols-4">

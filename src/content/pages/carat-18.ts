@@ -6,7 +6,7 @@ export default definePage({
   title: '18ct Gold Price per Gram UK: 750 Gold Value at Spot',
   description: '18ct gold price per gram in pounds at the live spot price, timed: 750 thousandths of gold in yellow, white or rose 18ct, value by weight and what an offer pays.',
   h1: '18ct gold price per gram',
-  resume: '18ct gold is three quarters pure gold, whatever its colour, and the number stamped on it is 750. Type the weight of your piece below to see what the gold in it is worth today. Yellow, white and rose 18ct differ only in what makes up the other quarter. UK hallmarking law fixes 18ct at exactly {f.18} thousandths, so the calculator multiplies your weight by 0.75 and by the spot price of a gram of gold, which it works out from the price of a troy ounce in pounds read from gold-api.com, with the time of that price shown. Engagement rings, wedding bands and good watches are often 18ct, and many are set with stones, so the gold weighs less than the piece. The result is the metal value, the most a refiner’s customer can pay before its costs. Gold by Carat is an independent site, not a gold buyer or a dealer, and it prints no buyer’s prices.',
+  resume: '18ct gold is three quarters pure gold, whatever its colour, and the number stamped on it is 750. Type the weight of your piece below to see what the gold in it is worth today. Yellow, white and rose 18ct differ only in what makes up the other quarter. UK hallmarking law fixes 18ct at exactly {f.18} thousandths (parts in 1,000), so the calculator multiplies your weight by 0.75 and by the spot price (the price traders use for pure metal) of a gram of gold, which it works out from the price of a troy ounce (31.1 g) in pounds read from gold-api.com, with the time of that price shown. Engagement rings, wedding bands and good watches are often 18ct, and many are set with stones, so the gold weighs less than the piece. The result is the metal value, the most a refiner’s customer can pay before its costs. Gold by Carat is an independent site, not a gold buyer or a dealer, and it prints no buyer’s prices.',
   faqs: [
     { q: 'Is white gold worth less than yellow gold of the same carat?', a: 'Not for its gold. 18ct white gold holds the same {f.18} thousandths of gold as 18ct yellow; the difference is in the other metals, often palladium or silver, and a thin plating of rhodium on the surface. A scrap buyer pays for the gold content, so the colour does not change the metal value.' },
     { q: 'How much gold is in an 18ct ring with a diamond?', a: 'Less than the ring weighs. Take the stone out of the reckoning: a one carat diamond weighs 0.2 g, and settings with several stones can account for more. If you cannot remove the stones, estimate their weight from the certificate or the jeweller’s description and subtract it before using the calculator.' },
@@ -20,14 +20,13 @@ ${h.table(['Weight of 18ct', 'Pure gold inside', 'Metal value'], rows, `Worked o
 <p>A plain 18ct wedding band of 4 or 5 g, a common weight, sits in the middle of that table. A man’s signet ring may weigh twice as much; a fine chain much less.</p>
 
 <h2>Why 18ct is exactly 750</h2>
-<p>Eighteen twenty-fourths is three quarters, 750 thousandths, so here the law and the arithmetic match. ${h.src('hallmarkSch2', 'UK hallmarking law')} lists 750 as one of the six standards for gold, and every item hallmarked 750 has been tested by an assay office and found to contain at least that much.</p>
+<p>Eighteen twenty-fourths is three quarters, 750 thousandths, so here the law and the arithmetic match. ${h.src('hallmarkSch2', 'UK hallmarking law')} lists 750 as one of the six standards for gold, and every item hallmarked 750 has been tested by an assay office (an official testing office) and found to contain at least that much.</p>
 
-<h2>Colour, plating and stones</h2>
+<h2>Colour, stones and selling an 18ct piece</h2>
 <p>Colour comes from the quarter that is not gold. Yellow 18ct usually balances silver and copper; rose 18ct has more copper; white 18ct uses palladium or silver and is often plated with rhodium to brighten it. None of this changes the gold content, which is why a refiner pays the same per gram of 18ct whatever its colour. Plating is so thin it does not show on kitchen scales.</p>
 <p>Stones do. A diamond, sapphire or cluster adds weight that is not gold, and some settings are hollow at the back. When a buyer removes the stones before weighing, its figure for the gold will be lower than the ring’s total weight. Ask for the stones back; they are yours and the scrap price does not pay for them.</p>
-<!--tool:offer-->
+<p>${h.a('offer', 'Have an offer for this gold? Check what share it pays →')}</p>
 
-<h2>Selling an 18ct piece</h2>
 <p>Because 18ct is three times as rich as 9ct by weight, every percentage point on the offer is worth more. A 10 percentage point gap on 10 g of 18ct is ${h.live(h.at(10, 750) * 0.1, 'XAU')} at our recorded price, compared with ${h.live(h.at(10, 375) * 0.1, 'XAU')} on 10 g of 9ct. That makes it more worthwhile to get two or three quotes for 18ct. If the piece was inherited, the ${h.a('inherited', 'page on selling inherited gold')} covers probate value and tax.</p>
 `;
   },

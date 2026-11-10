@@ -31,14 +31,14 @@ export function SpotLine({ spot, metals }: { spot: Spot; metals: Metal[] }) {
         return (
           <p key={m}>
             <span className={`mr-1.5 inline-block h-2 w-2 shrink-0 rounded-full align-middle ${q.live ? 'bg-green-600' : 'bg-navy-400'}`} aria-hidden="true" />
-            <span>{q.live ? `Live ${name} price` : `${METAL_NAME[m]} price recorded`}, {stamp(q.live ? q.at : SNAPSHOT.at[m])}: <span className="tabular-nums font-medium text-navy-900">{gbp2(finePerGram(q.gbpPerOz))}</span> a gram of pure {name} (<span className="tabular-nums">{gbp(q.gbpPerOz)}</span> an ounce). Your result uses this price.</span>
+            <span>{q.live ? `Live ${name} price` : `${METAL_NAME[m]} price recorded`}, {stamp(q.live ? q.at : SNAPSHOT.at[m])}: <span className="tabular-nums font-medium text-navy-900">{gbp2(finePerGram(q.gbpPerOz))}</span> a gram of pure {name}. Your result uses this price.</span>
           </p>
         );
       })}
       {anyFailed && <p className="text-amber-800">The live price could not be reached: the figures use the price recorded when this page was built, at the time shown.</p>}
       <details className="mt-0.5">
         <summary className="cursor-pointer underline hover:text-navy-900">Where this price comes from</summary>
-        <p className="mt-1">It is the price traders use for pure {metals.map((m) => METAL_NAME[m].toLowerCase()).join(' and ')}, from gold-api.com, a free price service. A shop pays less. The page reads it once when it opens, and the tables and examples in the text of this page are worked out at the same price.</p>
+        <p className="mt-1">It is the price traders use for pure {metals.map((m) => METAL_NAME[m].toLowerCase()).join(' and ')}, from gold-api.com, a free price service: {metals.map((m) => `${gbp(spot[m].gbpPerOz)}`).join(' and ')} an ounce, the 31.1 g unit precious metals are priced in. A shop pays less. The page reads it once when it opens, and the tables and examples in the text of this page are worked out at the same price.</p>
         <p className="mt-1">
           <button type="button" className="underline hover:text-navy-900" onClick={() => setNote(refreshSpot(metals) ? 'Checking for a newer price…' : 'Wait a few seconds before asking again.')}>Check for a newer price</button>
           {note && !allLive && <span className="ml-2">{note}</span>}
@@ -78,7 +78,9 @@ export function Row({ label, value, strong = false, bar }: { label: ReactNode; v
 }
 
 /** Cadre d'un calculateur : champs à gauche, résultat à côté (`data-resultat`). */
-export function Frame({ title, fields, result, foot, mini = false }: { title?: string; fields: ReactNode; result: ReactNode; foot?: ReactNode; mini?: boolean }) {
+/** `spotLine` : la ligne du cours passe sous le résultat (2026-11-10 : elle repoussait le montant hors du premier
+ *  écran du téléphone) ; l'heure du cours reste dite dans la ligne sous le gros chiffre. */
+export function Frame({ title, fields, result, foot, spotLine, mini = false }: { title?: string; fields: ReactNode; result: ReactNode; foot?: ReactNode; spotLine?: ReactNode; mini?: boolean }) {
   return (
     <div className={`not-prose rechner rounded-lg border border-accent-300 bg-white p-4 sm:p-5`} data-chrome>
       {title && <p className="mb-3 text-base font-semibold text-navy-900">{title}</p>}
@@ -87,6 +89,7 @@ export function Frame({ title, fields, result, foot, mini = false }: { title?: s
         <div data-resultat aria-live="polite" className="rounded-lg bg-accent-50 p-4">{result}</div>
       </div>
       {foot}
+      {spotLine && <div className="mt-3">{spotLine}</div>}
     </div>
   );
 }

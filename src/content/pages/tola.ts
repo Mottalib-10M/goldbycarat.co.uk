@@ -6,7 +6,7 @@ export default definePage({
   title: 'Gold Price per Tola in Pounds: Tola to Grams for 22ct',
   description: 'Gold price per tola in pounds at the live spot price for 22ct, 21ct or 24ct, with the tola weight shown and editable, and conversions to grams and troy ounces.',
   h1: 'Gold price per tola in pounds',
-  resume: 'A tola is a traditional South Asian unit for gold, and in the trade it is taken as 180 grains, which is {tola} grams. It has no definition in British law, unlike the troy ounce and the grain, so this calculator treats it as a convention: it starts at {tola} g and lets you change the weight if your jeweller uses a different figure, such as a rounded 11.66 g. Choose 22ct, 21ct or 24ct, type the number of tolas, and the calculator converts to grams and gives the metal value in pounds at the spot price read from gold-api.com, with the time of that price shown. It is meant for families in Britain who think in tolas because that is how wedding gold was weighed and bought. Gold by Carat is an independent site, not a gold buyer or a dealer.',
+  resume: 'A tola is a traditional South Asian unit for gold, and in the trade it is taken as 180 grains, which is {tola} grams. It has no definition in British law, unlike the troy ounce (31.1 g) and the grain, so this calculator treats it as a convention: it starts at {tola} g and lets you change the weight if your jeweller uses a different figure, such as a rounded 11.66 g. Choose 22ct, 21ct or 24ct, type the number of tolas, and the calculator converts to grams and gives the metal value in pounds at the spot price (the price traders use for pure metal) read from gold-api.com, with the time of that price shown. It is meant for families in Britain who think in tolas because that is how wedding gold was weighed and bought. Gold by Carat is an independent site, not a gold buyer or a dealer.',
   faqs: [
     { q: 'How many grams are in one tola?', a: 'The traditional tola is 180 grains, and a grain is {grain} g in UK law, so a tola is {tola} g. Some jewellers round it to 11.66 g or 11.7 g. On a heavy set the rounding adds up, so ask which figure your quote uses and set it in the calculator before comparing.' },
     { q: 'Is a tola price the same as a 22ct price?', a: 'Not unless it says so. A tola rate quoted in a shop window may be for 24ct, for 22ct, or a buying rate rather than a selling rate. Convert it to a price per gram of the stated carat, then compare it with the gram price here; the calculator shows both.' },
@@ -24,8 +24,7 @@ ${h.table(['Tolas', 'Grams', '22ct', '21ct', '24ct'], rows, `Tola of 180 grains;
 
 <h2>Using tolas when you sell</h2>
 <p>British buyers weigh in grams and quote per gram. When you know your set as “five tolas of 22ct”, convert it first: five tolas is about 58.3 g, and the metal value is in the table above. Then ask the buyer for its weight in grams and its per-gram rate, and compare both with yours. A difference in weight is the first thing to ask about; a difference in rate is the second.</p>
-<p>Many 22ct and 21ct pieces bought abroad have no British hallmark, so the ${h.a('carat-22', '22ct page')} and the ${h.a('carat-21', '21ct page')} explain what a buyer will test. For a mixed set, the ${h.a('scrap', 'scrap gold calculator')} adds up each carat.</p>
-<!--tool:scrap-->
+<p>Many 22ct and 21ct pieces bought abroad have no British hallmark, so the ${h.a('carat-22', '22ct page')} and the ${h.a('carat-21', '21ct page')} explain what a buyer will test. For a mixed set, the ${h.a('scrap', 'mixed lot calculator')} adds up each carat.</p>
 `;
   },
 });

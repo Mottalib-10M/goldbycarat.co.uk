@@ -35,10 +35,10 @@ const tp = page.toolProps ?? {};
   <article>
     <h1 class="mb-2 text-[1.6rem] font-bold leading-tight text-navy-900 sm:text-3xl">{x.h1}</h1>
     <Clamp text={x.resume} lang={lang} id={`clamp-${page.id}`} label={ui.readMore} class="mb-3" />
-    <div {...(page.kind === 'outil' ? { 'data-outil': '' } : {})} class="mb-3">
+    <div {...(page.kind === 'outil' ? { 'data-outil': '' } : {})} class="mb-8">
       <Tool client:load tool={page.tool} idp={page.id.slice(0, 3)} {...tp} />
     </div>
-    <p class="mb-8 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline hover:text-navy-900">{label('method', lang)}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a></p>
+    {/* Ligne « Figures and rules checked by… » retirée (2026-11-10) : l'encart éditeur du bas la porte déjà. */}
     <div class="prose prose-slate max-w-none">
       {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div id={p} class="not-prose my-6 scroll-mt-20" data-chrome><Tool client:load tool={p} idp={`m${i}`} {...tp} mini /></div>)}
     </div>

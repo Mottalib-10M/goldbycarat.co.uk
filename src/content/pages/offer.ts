@@ -18,7 +18,7 @@ export default definePage({
     const rows = [0.6, 0.7, 0.8, 0.9].map((p) => [h.pct(p, 0), h.live(v * p), h.live(v * (1 - p))]);
     return `
 <h2>Why a percentage beats a price</h2>
-<p><strong>A percentage stays comparable when the gold price moves; a sum of money does not.</strong> Gold moves every minute the markets are open. An offer of ${h.gbp(exampleOffer(10, 9, 0.7))} for 10 g of 9ct might be good on one day and poor a week later. Turned into a share of the metal at the moment of the quote, it becomes a number you can compare across buyers and across days. The checker reads today’s gold price when you open the page; if you are checking an old quote, keep in mind that the price may have moved since.</p>
+<p><strong>A percentage stays comparable when the gold price moves; a sum of money does not.</strong> The gold price moves every minute the markets are open. An offer of ${h.gbp(exampleOffer(10, 9, 0.7))} for 10 g of 9ct might be good on one day and poor a week later. Turned into a share of the metal at the moment of the quote, it becomes a number you can compare across buyers and across days. The checker reads today’s gold price when you open the page; if you are checking an old quote, keep in mind that the price may have moved since.</p>
 ${h.table(['Share of the gold value', 'Offer on 10 g of 9ct', 'Kept by the buyer'], rows, `Example: 10 g of 9ct holds ${h.live(v)} of gold at the same price as the calculator above (${h.when}).`)}
 <p>“Kept by the buyer” is not profit. It pays for refining, for carrying the price risk until the gold is sold on, for the shop, the staff and, for postal buyers, insured delivery. What it tells you is how much room there is between one offer and another.</p>
 
@@ -26,8 +26,7 @@ ${h.table(['Share of the gold value', 'Offer on 10 g of 9ct', 'Kept by the buyer
 <p>A percentage is only as good as the weight and carat behind it. Ask the buyer for both, in writing if possible. If its weight is lower than yours, ask why: stones removed, a spring taken out, or a scale error. If it says the carat is lower than the hallmark, ask for the test result. A British hallmark from an official testing office means the piece met ${h.src('hallmarkSch2', 'the legal standard')} when it was marked.</p>
 
 <h2>Checking several gold offers at once</h2>
-<p><strong>Got two or three quotes? Type them below to see which pays the biggest share of your gold.</strong> The comparison puts them side by side as percentages; the figures already filled in are only examples. For a lot of several carats, use the ${h.a('scrap', 'scrap gold calculator')} instead: it takes the weight of each carat and one offer for the whole lot. The ${h.a('where-to-sell', 'guide to where to sell')} explains how each type of buyer works.</p>
-<!--tool:compare-->
+<p><strong>Got two or three quotes? Put them side by side: the biggest share of your gold is the best offer.</strong> The ${h.a('where-to-sell', 'quote comparison')} takes up to three offers for the same gold; the link under the result above opens it with your carat, weight and offer already filled in. For a lot of several carats, use the ${h.a('scrap', 'mixed lot calculator')} instead: it takes the weight of each carat and one offer for the whole lot.</p>
 `;
   },
 });

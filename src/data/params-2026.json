@@ -96,6 +96,7 @@
     "cg78300": { "url": "https://www.gov.uk/hmrc-internal-manuals/capital-gains-manual/cg78300", "label": { "en": "HMRC Capital Gains Manual CG78300: foreign currency is a chargeable asset" } },
     "govCgtRates": { "url": "https://www.gov.uk/capital-gains-tax/rates", "label": { "en": "GOV.UK: Capital Gains Tax rates from 6 April 2026" } },
     "govCgtAllowance": { "url": "https://www.gov.uk/capital-gains-tax/allowances", "label": { "en": "GOV.UK: Capital Gains Tax allowances" } },
+    "govCgtRatesAllowances": { "url": "https://www.gov.uk/guidance/capital-gains-tax-rates-and-allowances", "label": { "en": "HMRC: Capital Gains Tax rates and allowances, tax years 2021 to 2022 through 2026 to 2027 (updated 13 April 2026)" } },
     "govChattels": { "url": "https://www.gov.uk/capital-gains-tax-personal-possessions", "label": { "en": "GOV.UK: Capital Gains Tax on personal possessions" } },
     "govChattelsGain": { "url": "https://www.gov.uk/capital-gains-tax-personal-possessions/work-out-your-gain", "label": { "en": "GOV.UK: personal possessions, work out your gain" } },
     "vatNotice70121": { "url": "https://www.gov.uk/guidance/gold-acquisitions-imports-investments-and-vat-notice-70121", "label": { "en": "HMRC VAT Notice 701/21: gold imports, exports and investment gold" } },

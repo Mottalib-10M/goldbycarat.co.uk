@@ -4,7 +4,7 @@
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/inter-var.woff2') format('woff2'); }
 @theme {
   --color-navy-50: #f8fafc; --color-navy-100: #f1f5f9; --color-navy-200: #e2e8f0; --color-navy-300: #cbd5e1; --color-navy-400: #94a3b8; --color-navy-500: #64748b; --color-navy-600: #475569; --color-navy-700: #334155; --color-navy-800: #1e293b; --color-navy-900: #0f172a; --color-navy-950: #020617;
-  --color-accent-50: #fcf8ed; --color-accent-100: #f9efd7; --color-accent-200: #f3deaf; --color-accent-300: #ebc87a; --color-accent-400: #e3b244; --color-accent-500: #7A5A12; --color-accent-600: #684c0f; --color-accent-700: #553f0d; --color-accent-800: #44320a; --color-accent-900: #362808;
+  --color-accent-50: #F0F2F6; --color-accent-100: #E1E4ED; --color-accent-200: #B3BCD2; --color-accent-300: #7385AC; --color-accent-400: #344D87; --color-accent-500: #012169; --color-accent-600: #012169; --color-accent-700: #01184C; --color-accent-800: #0A1230; --color-accent-900: #0A1230;
   --color-success: #15803d; --color-warning: #b45309; --color-error: #dc2626;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
@@ -128,3 +128,45 @@ p[id$="-help"]:not([role="status"]), [data-fixe], [data-actuellement], [aria-liv
 :where(form, div, fieldset):has(> .grid-rows-subgrid) { align-content: start; }
 /* Dans une grille, le cadre du formulaire s'arrête sous ses champs au lieu de s'étirer à la hauteur du résultat. */
 .grid > form:has(> .grid-rows-subgrid) { align-self: start; }
+
+/* === Charte de page v3 (refonte identité du 2026-11-25, validée par l'éditeur) : en-tête plein, bandeau héros, simulateur en carte blanche, sections alternées, boutons pleins, chiffres-résultats, pied sombre. === */
+:root {  }
+html, body { overflow-x: clip; }
+header nav[aria-label] { background: #012169 !important; border-bottom: 5px solid #C8102E !important; }
+header nav[aria-label] > div:first-child, header nav[aria-label] > div:first-child a, header nav[aria-label] > div:first-child button, header nav[aria-label] > div:first-child span { color: #FFFFFF !important; }
+header nav[aria-label] > div:first-child a:hover, header nav[aria-label] .nav-dropdown-trigger:hover { background: rgba(255,255,255,.14) !important; }
+header nav[aria-label] .nav-dropdown-panel, header nav[aria-label] .nav-dropdown-panel * { color: #0F172A !important; }
+header nav[aria-label] .nav-dropdown-panel { background: #FFFFFF !important; }
+#mobile-menu { background: #FFFFFF !important; }
+#mobile-menu, #mobile-menu a, #mobile-menu span, #mobile-menu button { color: #0F172A !important; }
+header nav[aria-label] img { background: #FFFFFF; border-radius: 7px; padding: 2px; }
+main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav) { background: #012169 !important; box-shadow: 0 0 0 100vmax #012169; clip-path: inset(0 -100vmax); padding-top: 1.1rem !important; padding-bottom: 1.4rem !important; margin-bottom: 0 !important; border: 0 !important; }
+:is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)), :is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)) :not(svg, svg *) { color: #FFFFFF !important; border-color: rgba(255,255,255,.35) !important; }
+:is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)) a { text-decoration: underline; text-decoration-color: #C8102E; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+:is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)) h1 { letter-spacing: -0.02em; }
+:is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)) :is(a,li,div,span)[class*="bg-"]:not(h1) { background: rgba(255,255,255,.12) !important; }
+:is(main > div.max-w-6xl > :is(h1, h1 + p, h1 + p + nav)) :is(a,button)[class*="bg-"] { background: #C8102E !important; color: #FFFFFF !important; border-color: #C8102E !important; text-decoration: none; }
+main astro-island > div[class*="rounded"]:first-child { background: #FFFFFF !important; border-top: 6px solid #C8102E !important; }
+main > div.max-w-6xl > :is(section,div.prose,div.clamp):nth-of-type(odd) { background: #E1E4ED; box-shadow: 0 0 0 100vmax #E1E4ED; clip-path: inset(0 -100vmax); padding-top: 1.2rem; padding-bottom: 1.2rem; }
+main h2:not(footer h2) { color: #012169 !important; text-decoration: none; border-bottom: 5px solid #C8102E; padding-bottom: .3rem; width: fit-content; }
+main h3 { color: #012169; }
+main :is([class*="text-navy-400"], [class*="text-navy-500"]) { color: #3B4A5E !important; }
+main :is(button[type="submit"], :is(a,button):is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"],[class~="bg-navy-900"])) { background: #C8102E !important; color: #FFFFFF !important; border-color: #C8102E !important; }
+main :is(button[type="submit"], :is(a,button):is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"])):hover { background: #C8102E !important; }
+main :is(.prose a, p > a, li > a):not([class*="bg-"], footer *, [class*="bg-navy-8"] *, [class*="bg-navy-9"] *, [class*="bg-accent-8"] *, [class*="bg-accent-9"] *) { color: #012169; text-decoration: underline; text-decoration-color: #C8102E; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+main .bg-accent-50 { background: #F0F2F6 !important; border-left: 6px solid #C8102E; }
+main table thead th { color: #012169 !important; border-bottom: 3px solid #C8102E !important; }
+main table tbody tr:first-child > * { border-top: 4px solid #FFFFFF !important; }
+main :is([aria-live], [role="status"], output) :is([class*="text-2xl"], [class*="text-3xl"], [class*="text-4xl"]):not(h1,h2) { color: #C8102E !important; font-size: 2.2rem !important; line-height: 1.15 !important; }
+footer { background: #0A1230 !important; border-top: 6px solid #C8102E !important; }
+footer, footer *:not(svg, svg *) { color: #E5E7EB !important; border-color: rgba(255,255,255,.18) !important; }
+footer [class*="bg-"]:not(footer) { background: transparent !important; }
+footer a { text-decoration-color: #C8102E !important; }
+
+/* pas de bande blanche entre l'en-tête et le bandeau : le conteneur du titre ne garde pas de marge haute */
+main > div:has(> h1:first-child) { padding-top: 0 !important; }
+/* bandeau : titre, chapeau et boutons d'un seul bloc (pas de vide de 40 px entre le titre et le chapeau) */
+main > div.max-w-6xl > :is(#_v3, h1):has(+ p) { padding-bottom:.375rem !important; }
+main > div.max-w-6xl > :is(#_v3, h1 + p) { padding-top:0 !important; }
+main > div.max-w-6xl > :is(#_v3, h1 + p):has(+ nav) { padding-bottom:.75rem !important; }
+main > div.max-w-6xl > :is(#_v3, h1 + p + nav) { padding-top:.25rem !important; }
